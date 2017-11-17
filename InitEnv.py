@@ -22,7 +22,7 @@ import Common
 #logging.basicConfig(level=logging.DEBUG)
 
 cmd = [ ['scapy','-h'] ,
-        ['airmon-ng','-h']]
+        ['airmon-ng','-h'] ]
 
 
 class checkEnv(object):
@@ -33,7 +33,7 @@ class checkEnv(object):
     __env_failed = False
 
     def __init__(self):
-        pass
+        self.__do_check()
 
     def __check_all(self):
         for i in range(len(cmd)):
@@ -45,12 +45,16 @@ class checkEnv(object):
         self.__err_permission = self.__check_permission()
         self.__err_os = self.__check_os()
 
-    def do_check(self):
+    def __do_check(self):
         self.__check_all()
         self.__get_netcard()
         self.showInfo()
-        return  self.__env_failed
 
+    def get_check_result(self):
+        return self.__env_failed
+
+    def get_netcard_info(self):
+        return self.__netcard_info
     '''
     # 这种方法不一定准确
     def getWirelessInterfacesList():
@@ -93,9 +97,9 @@ class checkEnv(object):
             self.__env_failed = False
 
         print UiLIb.fmt(UiLIb.BLUE, "===\tNetwork inforrmation:")
-        print UiLIb.fmt(UiLIb.YELLOW, "\tInterface\tIP Address\t\t")
+        print UiLIb.fmt(UiLIb.YELLOW, "No\tNIC\t\tIPAddr\t\t")
         for i in range(len(self.__netcard_info)):
-            print UiLIb.fmt(UiLIb.GREEN, "\t"+self.__netcard_info[i][0]+"\t\t"+self.__netcard_info[i][1]+"\t\t")
+            print UiLIb.fmt(UiLIb.GREEN,str(i)+"\t"+self.__netcard_info[i][0]+"\t\t"+self.__netcard_info[i][1]+"\t\t")
 
     def __check_permission(self):
         return True if(os.getuid() != 0) else False
