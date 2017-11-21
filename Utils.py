@@ -42,6 +42,9 @@ class Utils(object):
         info = psutil.net_if_addrs()
         for k, v in info.items():
             for item in v:
+                '''
+                    这里有点问题，关于MAC地址类型，在MAC下是18，在Kali下是17
+                '''
                 if item[0] == 18 or item[0] == 17:
                     self.__mac_info.append((k, item[1]))
                 if item[0] == 2:
@@ -54,6 +57,13 @@ class Utils(object):
         for i in range(len(self.__mac_info)):
             if (intf == self.__mac_info[i][0]):
                 return self.__mac_info[i][1]
+        return ""
+
+    def get_ip(self,intf):
+        for i in range(len(self.__ip_info)):
+            if (intf == self.__ip_info[i][0]):
+                return self.__ip_info[i][1]
+        return ""
 
     def runCmd(self , cmd):
         try:

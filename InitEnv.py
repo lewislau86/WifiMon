@@ -93,13 +93,19 @@ class checkEnv(object):
             self.__env_failed = False
 
         UiLIb.CPrint.BLUE("===\tNetwork inforrmation:")
-        UiLIb.CPrint.YELLOW("No\tNIC\t\tIPAddr\t\t\tMac\t\t")
+        UiLIb.CPrint.YELLOW("No\tNIC\t\t\t\tMac\t\t\t\tIpAddress\t\t")
 
+        # 这里要修改下，因为有Mac地址不一定有IP
+        for i in range(len(self.__netcard_mac_info)):
+            ipStr = Utils.get_ip(self.__netcard_mac_info[i][0])
+            UiLIb.CPrint.GREEN(str(i) + "\t" + self.__netcard_mac_info[i][0] + "\t\t\t" + self.__netcard_mac_info[i][1] + "\t\t" + ipStr )
+
+        '''
         for i in range(len(self.__netcard_ip_info)):
             macstr = Utils.get_mac(self.__netcard_ip_info[i][0])
             if None != macstr:
                 UiLIb.CPrint.GREEN(str(i) +"\t" + self.__netcard_ip_info[i][0] + "\t\t" + self.__netcard_ip_info[i][1] + "\t\t" + macstr)
-
+        '''
 
 
     def __check_permission(self):
