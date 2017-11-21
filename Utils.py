@@ -42,7 +42,7 @@ class Utils(object):
         info = psutil.net_if_addrs()
         for k, v in info.items():
             for item in v:
-                if item[0] == 18:
+                if item[0] == 18 or item[0] == 17:
                     self.__mac_info.append((k, item[1]))
                 if item[0] == 2:
                     self.__ip_info.append((k, item[1]))

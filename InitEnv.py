@@ -37,7 +37,8 @@ class checkEnv(object):
 
     def __check_all(self):
         for i in range(len(cmd)):
-            if (0 != Utils.runCmd(cmd[i])):
+            ret,_ = Utils.runCmd(cmd[i])
+            if (0 != ret ):
                 logging.debug(cmd[i][0] + "\t Missing")
                 self.__missing_info.append(cmd[i][0])
             else:
