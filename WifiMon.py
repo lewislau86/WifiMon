@@ -7,27 +7,30 @@ Date  : 2017/11/16
 Desc  :
 """
 
+#==========================================================
+# Define
+
 DESCRIPTION = "A command line tool for logging 802.11 probe request frames"
 import sys
 import logging
 import argparse
 import subprocess
 import UiLIb
-
+from Utils import  singleton as Utils
 from InitEnv import singleton as Init
-from Utils import singleton as Utils
+from PacketParse import  singleton as Packet
 
 
 #logging.basicConfig(level=logging.DEBUG)
 
 
+#==========================================================
+# Function
 def parse_args():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument('-i', '--interface', help="capture interface")
     parser.add_argument('-o', '--output', default='out.log', help="logging output location")
     return parser.parse_args()
-
-#==========================================================
 
 def parse_input(inputText):
     '''
@@ -38,13 +41,14 @@ def parse_input(inputText):
     netCardName = None
     if inputText.isdigit():
         index = int(inputText)
-        if index < len(Init.get_netcard_info()):
-            netCardName = Init.get_netcard_info()[index][0]
+        if index < len(Utils.getNICInfo()):
+            netCardName,_ = Utils.getNICInfo()[index][0]
     else:
-        for i in range(len(Init.get_netcard_info())):
-            if inputText.lower() == str(Init.get_netcard_info()[i][0]).lower():
-                netCardName = str(Init.get_netcard_info()[i][0])
+        for i in range(len(Utils.getNICInfo())):
+            if inputText.lower() == str(Utils.getNICInfo()[i][0]).lower():
+                netCardName,_ = str(Utils.getNICInfo()[i][0])
     return netCardName
+
 
 def main():
     global  nicDev
@@ -56,12 +60,31 @@ def main():
     #logging.debug(args)
     # 这里应该避免输入错误 让用户直接选择网卡
     if not args.interface:
-        infInput = raw_input(UiLIb.fmt(UiLIb.RED, "Enter the 'No' ro 'NIC' to sniffing it: "))
-        nicDev = parse_input(infInput)
+        try:
+            # do while
+            while True:
+                infInput = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Enter the 'No' ro 'NIC' to sniffing it: "))
+                nicDev = parse_input(infInput)
+                if nicDev != None:
+                    break
+                else:
+                    UiLIb.CPrint.RED("Error input, try again")
+        except KeyboardInterrupt:
+            UiLIb.CPrint.GREEN("\n\n\t****** Good Bye ******\n\n")
+            sys.exit(0)
     else:
         nicDev = parse_input(args.interface)
-    if None != nicDev:
-        Utils.enableNICMonitorMode(nicDev)
 
+    if None != nicDev:
+        UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))
+
+    if True ==  Utils.getNICMonitorMode(nicDev):
+        Packet.do_sniff()
+
+
+
+
+#==========================================================
+# Global
 if __name__ == "__main__":
     main()

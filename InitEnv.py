@@ -13,20 +13,20 @@ Desc  :
 """
 
 import subprocess
-import psutil
 import logging
 import UiLIb
 import os
-import Common
+from Utils import singleton as Utils
 
 #logging.basicConfig(level=logging.DEBUG)
 
 cmd = [ ['scapy','-h'] ,
         ['airmon-ng','-h'] ]
-
+#==========================================================
 
 class checkEnv(object):
-    __netcard_info = []
+    __netcard_ip_info = []
+    __netcard_mac_info = []
     __missing_info = []
     __err_permission = False
     __err_os = False
@@ -37,7 +37,7 @@ class checkEnv(object):
 
     def __check_all(self):
         for i in range(len(cmd)):
-            if (0 != Common.runCmd(cmd[i])):
+            if (0 != Utils.runCmd(cmd[i])):
                 logging.debug(cmd[i][0] + "\t Missing")
                 self.__missing_info.append(cmd[i][0])
             else:
@@ -53,8 +53,6 @@ class checkEnv(object):
     def get_check_result(self):
         return self.__env_failed
 
-    def get_netcard_info(self):
-        return self.__netcard_info
     '''
     # 这种方法不一定准确
     def getWirelessInterfacesList():
@@ -71,35 +69,37 @@ class checkEnv(object):
         return networkInterfaces
     '''
     def __get_netcard(self):
-        info = psutil.net_if_addrs()
-        for k, v in info.items():
-            for item in v:
-                if item[0] == 2:
-                    self.__netcard_info.append((k, item[1]))
-        return self.__netcard_info
+        self.__netcard_ip_info , self.__netcard_mac_info = Utils.getNICInfo()
+        return self.__netcard_ip_info , self.__netcard_mac_info
+
 
 
     def showInfo(self):
         if len(self.__missing_info)>0:
-            print  UiLIb.fmt(UiLIb.BLUE, "===\tYou must install moudle as follow:")
+            UiLIb.CPrint.BLUE("===\tYou must install moudle as follow:")
             for i in range(len(self.__missing_info)):
-                print UiLIb.fmt(UiLIb.GREEN,self.__missing_info[i])
+                UiLIb.CPrint.GREEN(self.__missing_info[i])
             self.__env_failed = False
         else:
-            print UiLIb.fmt(UiLIb.BLUE, "===\tThe dependent module is installed.")
+            UiLIb.CPrint.BLUE("===\tThe dependent module is installed.")
 
         if self.__err_permission:
-            print UiLIb.fmt(UiLIb.BLUE, "===\tCurrent user is not root.")
+            UiLIb.CPrint.BLUE("===\tCurrent user is not root.")
             self.__env_failed = False
 
         if self.__err_os:
-            print UiLIb.fmt(UiLIb.BLUE, "===\tMust run on GNU/Linux or Unix.")
+            UiLIb.CPrint.BLUE("===\tMust run on GNU/Linux or Unix.")
             self.__env_failed = False
 
-        print UiLIb.fmt(UiLIb.BLUE, "===\tNetwork inforrmation:")
-        print UiLIb.fmt(UiLIb.YELLOW, "No\tNIC\t\tIPAddr\t\t")
-        for i in range(len(self.__netcard_info)):
-            print UiLIb.fmt(UiLIb.GREEN,str(i)+"\t"+self.__netcard_info[i][0]+"\t\t"+self.__netcard_info[i][1]+"\t\t")
+        UiLIb.CPrint.BLUE("===\tNetwork inforrmation:")
+        UiLIb.CPrint.YELLOW("No\tNIC\t\tIPAddr\t\t\tMac\t\t")
+
+        for i in range(len(self.__netcard_ip_info)):
+            macstr = Utils.get_mac(self.__netcard_ip_info[i][0])
+            if None != macstr:
+                UiLIb.CPrint.GREEN(str(i) +"\t" + self.__netcard_ip_info[i][0] + "\t\t" + self.__netcard_ip_info[i][1] + "\t\t" + macstr)
+
+
 
     def __check_permission(self):
         return True if(os.getuid() != 0) else False
@@ -107,5 +107,7 @@ class checkEnv(object):
     def __check_os(self):
         return True if (os.uname()[0].startswith("Linux") and not "Darwin" not in os.uname()) else False
 
+
+# ==========================================================
 # 单例模式
 singleton = checkEnv()

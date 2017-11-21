@@ -33,3 +33,35 @@ print fmt(color.PURPLE, 'kzc')
 print fmt(color.CYAN, 'kzc')
 print fmt(color.GRAY, 'kzc')
 '''
+class CPrint(object):
+    @staticmethod
+    def BLUE(*args):
+        print fmt(BLUE , *args)
+
+    @staticmethod
+    def BLACK(*args):
+        print fmt(BLACK , *args)
+
+    @staticmethod
+    def RED(*args):
+        print fmt(RED, *args)
+
+    @staticmethod
+    def GREEN(*args):
+        print fmt(GREEN, *args)
+
+    @staticmethod
+    def YELLOW(*args):
+        print fmt(YELLOW, *args)
+
+    @staticmethod
+    def PURPLE(*args):
+        print fmt(PURPLE, *args)
+
+    @staticmethod
+    def CYAN(*args):
+        print fmt(CYAN, *args)
+
+    @staticmethod
+    def GRAY(*args):
+        print fmt(GRAY, *args)
