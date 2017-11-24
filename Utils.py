@@ -32,6 +32,8 @@ class Utils(object):
 
     def getNICMonitorMode(self,nicDev):
         monDev = str(nicDev)+"mon"
+        del self.__ip_info[:]
+        del self.__mac_info[:]
         self.__getNICInfo()
         for i in range(len(self.__mac_info)):
             if monDev==self.__mac_info[1][0]:
