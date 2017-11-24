@@ -8,6 +8,11 @@ Desc  :
 """
 from scapy.all import *
 
+PROBE_REQUEST_TYPE=0
+PROBE_REQUEST_SUBTYPE=4
+AP_BROADCAST_SUBTYPE=8
+
+
 class packetParse(object):
     def PacketHandler(pkt):
         mymac = getmac(intf)
