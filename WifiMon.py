@@ -42,15 +42,14 @@ def parse_input(inputText):
     if inputText.isdigit():
         index = int(inputText)
         if index < len(Utils.getNICInfo()):
-            _,netCardName = Utils.getNICInfo()
-            print netCardName[index][0]
+            _,macList = Utils.getNICInfo()
+            netCardName = str(macList[index][0])
 
     else:
         for i in range(len(Utils.getNICInfo())):
             if inputText.lower() == str(Utils.getNICInfo()[i][0]).lower():
                 netCardName,_ = str(Utils.getNICInfo()[i][0])
     return netCardName
-
 
 def main():
     global  nicDev
@@ -77,7 +76,6 @@ def main():
     else:
         nicDev = parse_input(args.interface)
 
-    print nicDev
     if None != nicDev:
         UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))
 
