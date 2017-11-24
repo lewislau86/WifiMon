@@ -30,7 +30,7 @@ class Utils(object):
             return False
 
     def getNICMonitorMode(self,nicDev):
-        monDev = nicDev+"mon"
+        monDev = str(nicDev)+"mon"
         self.__getNICInfo()
         for i in range(len(self.__mac_info)):
             if monDev==self.__mac_info[1][0]:
