@@ -7,6 +7,7 @@ Date  : 2017/11/16
 Desc  : 
 """
 from scapy.all import *
+from Utils import singleton as Utils
 
 PROBE_REQUEST_TYPE=0
 PROBE_REQUEST_SUBTYPE=4
@@ -16,7 +17,7 @@ AP_BROADCAST_SUBTYPE=8
 class packetParse(object):
     __intf = None
     def PacketHandler(self , pkt):
-        mymac = getmac(__intf)
+        mymac = Utils.get_mac(__intf)
         noise = {
             'ff:ff:ff:ff:ff:ff',  # broadcast
             '00:00:00:00:00:00',  # broadcast
