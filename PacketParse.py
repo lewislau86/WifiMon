@@ -17,7 +17,7 @@ AP_BROADCAST_SUBTYPE=8
 class packetParse(object):
     __intf = None
     def PacketHandler(self , pkt):
-        mymac = Utils.get_mac(__intf)
+        mymac = Utils.get_mac(self.__intf)
         noise = {
             'ff:ff:ff:ff:ff:ff',  # broadcast
             '00:00:00:00:00:00',  # broadcast
