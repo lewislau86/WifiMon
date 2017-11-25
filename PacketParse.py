@@ -34,10 +34,10 @@ class packetParse(object):
         if pkt.haslayer(Dot11):
             if pkt.addr2 not in noise:
                 if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == PROBE_REQUEST_SUBTYPE:
-                    PrintPacketClient(pkt)
+                    self.PrintPacketClient(pkt)
                 if args.access:
                     if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
-                        PrintPacketAP(pkt)
+                        self.PrintPacketAP(pkt)
 
     def PrintPacketClient(self , pkt):
         print "PrintPacketClient"
