@@ -80,8 +80,7 @@ def main():
         UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))
 
     if True ==  Utils.getNICMonitorMode(nicDev):
-        print "start sniff"
-        Packet.do_sniff()
+        Packet.do_sniff(nicDev)
 
 
 

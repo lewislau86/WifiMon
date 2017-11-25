@@ -14,8 +14,9 @@ AP_BROADCAST_SUBTYPE=8
 
 
 class packetParse(object):
-    def PacketHandler(pkt):
-        mymac = getmac(intf)
+    __intf = None
+    def PacketHandler(self , pkt):
+        mymac = getmac(__intf)
         noise = {
             'ff:ff:ff:ff:ff:ff',  # broadcast
             '00:00:00:00:00:00',  # broadcast
@@ -34,9 +35,10 @@ class packetParse(object):
                     if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
                         PrintPacketAP(pkt)
 
-    def do_sniff():
+    def do_sniff(self , intf):
+        self.__intf = intf
         try:
-            sniff(iface=intf, prn=PacketHandler, store=0)
+            sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except Exception, e:
             print 'Caught exception while running sniff()', e
 
