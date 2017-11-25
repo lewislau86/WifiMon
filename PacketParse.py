@@ -50,6 +50,7 @@ class packetParse(object):
 
     def do_sniff(self , intf):
         self.__intf = intf
+        print  intf
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except Exception, e:
