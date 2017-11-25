@@ -37,12 +37,10 @@ class parseArg(object):
             _, macList = Utils.getNICInfo()
             if index < len(macList):
                 netCardName = str(macList[index][0])
-                print "aaaa"
         else:
             for i in range(len(Utils.getNICInfo())):
                 if inputText.lower() == str(Utils.getNICInfo()[i][0]).lower():
                     netCardName, _ = str(Utils.getNICInfo()[i][0])
-                    print "bbbb"
         return netCardName
 
     def do_parse(self):
@@ -53,7 +51,6 @@ class parseArg(object):
                 while True:
                     infInput = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Enter the 'No' ro 'NIC' to sniffing it: "))
                     dev = self.parse_input(infInput)
-                    print dev
                     if dev != None:
                         break
                     else:
