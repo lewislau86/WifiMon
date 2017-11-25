@@ -115,6 +115,7 @@ class checkEnv(object):
         return True if (os.uname()[0].startswith("Linux") and not "Darwin" not in os.uname()) else False
 
 
+
 # ==========================================================
 # 单例模式
 singleton = checkEnv()

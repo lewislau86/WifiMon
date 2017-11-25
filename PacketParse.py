@@ -8,6 +8,7 @@ Desc  :
 """
 from scapy.all import *
 from Utils import singleton as Utils
+from PraseArg import singleton as PraseArg
 
 PROBE_REQUEST_TYPE=0
 PROBE_REQUEST_SUBTYPE=4
@@ -16,6 +17,7 @@ AP_BROADCAST_SUBTYPE=8
 
 class packetParse(object):
     __intf = None
+    arg = PraseArg.get_parse()
     def PacketHandler(self , pkt):
         mymac = Utils.get_mac(self.__intf)
         noise = {
@@ -36,6 +38,12 @@ class packetParse(object):
                     if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
                         PrintPacketAP(pkt)
 
+    def PrintPacketClient(self):
+        pass
+
+    def PrintPacketClient(self):
+        pass
+    
     def do_sniff(self , intf):
         self.__intf = intf
         try:
