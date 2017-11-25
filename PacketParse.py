@@ -19,7 +19,7 @@ class packetParse(object):
     __intf = None
 
     def PacketHandler(self , pkt):
-        arg = PraseArg.get_parse()
+        args = PraseArg.get_parse()
         mymac = Utils.get_mac(self.__intf)
         noise = {
             'ff:ff:ff:ff:ff:ff',  # broadcast
