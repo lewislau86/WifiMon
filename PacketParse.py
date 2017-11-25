@@ -38,12 +38,16 @@ class packetParse(object):
                     if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
                         PrintPacketAP(pkt)
 
-    def PrintPacketClient(self):
+    def PrintPacketClient(self , pkt):
+        print "PrintPacketClient"
+        print pkt
         pass
 
-    def PrintPacketClient(self):
+    def PrintPacketAP(self,pkt):
+        print "PrintPacketAP"
+        print pkt
         pass
-    
+
     def do_sniff(self , intf):
         self.__intf = intf
         try:
