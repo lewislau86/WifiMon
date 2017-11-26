@@ -9,6 +9,8 @@ Desc  :
 from scapy.all import *
 from Utils import singleton as Utils
 from PraseArg import singleton as PraseArg
+from MacParser import singleton as MacParser
+
 
 PROBE_REQUEST_TYPE=0
 PROBE_REQUEST_SUBTYPE=4
@@ -41,12 +43,11 @@ class packetParse(object):
 
     def PrintPacketClient(self , pkt):
         print "PrintPacketClient"
-        print pkt
         pass
 
     def PrintPacketAP(self,pkt):
         print "PrintPacketAP"
-        print pkt
+        manufacture = str(MacParser.get_manuf(pkt.addr2))
         pass
 
     def do_sniff(self , intf):
