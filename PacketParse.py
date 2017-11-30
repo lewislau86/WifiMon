@@ -23,6 +23,7 @@ AP_BROADCAST_SUBTYPE=8
 class packetParse(object):
     __intf = None
     __Numap = None
+    __Numclients = None
     __Currentloc = None
     __args = ()
     __clients = []
@@ -31,9 +32,7 @@ class packetParse(object):
     __macAP = []
 
     def __init__(self):
-        print "*******be called******"
         self.__args = PraseArg.get_parse()
-        print self.__args
 
     def get_rssi(self, extra):
         rssi = int(-(256 - ord(extra[-2:-1])));
