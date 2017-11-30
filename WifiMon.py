@@ -36,10 +36,10 @@ def main():
     nicDev = PraseArg.do_parse()
     if None != nicDev and False == Utils.getNICMonitorMode(nicDev):
         UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))
-    time.sleep(0.5)
+
     if True ==  Utils.getNICMonitorMode(nicDev):
         Packet.do_sniff(nicDev)
-    else
+    else:
         print("Monitor Mode False")
 
 
