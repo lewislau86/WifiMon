@@ -37,7 +37,7 @@ class packetParse(object):
 
         if rssi < -100:
             return -1;
-    return rssi;
+        return rssi;
 
     def PacketHandler(self , pkt):
         mymac = Utils.get_mac(self.__intf)
