@@ -39,6 +39,8 @@ def main():
     time.sleep(0.5)
     if True ==  Utils.getNICMonitorMode(nicDev):
         Packet.do_sniff(nicDev)
+    else
+        print("Monitor Mode False")
 
 
 
