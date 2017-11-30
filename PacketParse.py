@@ -10,7 +10,7 @@ from scapy.all import *
 from Utils import singleton as Utils
 from PraseArg import singleton as PraseArg
 #from gps import *
-from MacParser import singleton as MacParser
+from MacParser import singleton as whmp
 import datetime
 import logging
 
