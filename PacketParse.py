@@ -31,7 +31,7 @@ class packetParse(object):
     __macAP = []
 
     def __init__(self):
-        __args = PraseArg.get_parse()
+        self.__args = PraseArg.get_parse()
 
     def get_rssi(self, extra):
         rssi = int(-(256 - ord(extra[-2:-1])));
