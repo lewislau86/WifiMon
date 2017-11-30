@@ -11,6 +11,7 @@ from Utils import singleton as Utils
 from PraseArg import singleton as PraseArg
 from MacParser import singleton as MacParser
 import datetime
+import logging
 
 
 PROBE_REQUEST_TYPE=0
@@ -20,12 +21,14 @@ AP_BROADCAST_SUBTYPE=8
 
 class packetParse(object):
     __intf = None
-    Numap = None
-    Currentloc = None
+    __Numap = None
+    __Currentloc = None
+    __args = None
 
+    def __init__(self):
+        __args = PraseArg.get_parse()
 
     def PacketHandler(self , pkt):
-        args = PraseArg.get_parse()
         mymac = Utils.get_mac(self.__intf)
         noise = {
             'ff:ff:ff:ff:ff:ff',  # broadcast
@@ -46,11 +49,52 @@ class packetParse(object):
                         self.PrintPacketAP(pkt)
 
     def PrintPacketClient(self , pkt):
-        print "PrintPacketClient"
-        pass
+        ts = time.time()
+        st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
+
+        ssid_probe = pkt.getlayer(Dot11ProbeReq).info
+        manufacture = str(whmp.get_manuf(pkt.addr2))
+        mac = pkt.addr2
+        gpsloc = ''
+        crypto = 'None'  # instead of being blank, client has none for crypto probe request
+
+        if args.gpstrack:
+            gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
+
+        # Logging info
+        fields = []
+        fields.append(st)  # Log Time
+        fields.append('Client')  # Log Client or AP
+        fields.append(mac)  # Log Mac Address
+        fields.append(manufacture)  # Log Device Manufacture
+        fields.append(ssid_probe.decode("utf-8"))  # Log SSID
+        fields.append(crypto)  # Log SSID
+        fields.append(gpsloc)  # Log GPS data
+        fields.append(args.location)  # Log GPS data
+        fields.append(str(get_rssi(pkt.notdecoded)))  # RSSI
+
+        # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
+        if ssid_probe not in clients and ssid_probe != "":
+            clients.append(ssid_probe)
+            macClient.append(mac)
+            print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
+                "utf-8") + W + ']'
+        # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
+        elif ssid_probe in clients and mac not in macClient:
+            macClient.append(mac)
+            print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
+                "utf-8") + W + ']'
+            self.__Numclients += 1
+        # if mac is not in the list and the probe has a broadcast (empty) then add mac to list
+        elif mac not in macClient and ssid_probe == "":
+            macClient.append(mac)
+            print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + ']' + W + ' New Client'
+            self.__Numclients += 1
+
+        logger.info(self.__args.delimiter.join(fields))
 
     def PrintPacketAP(self , pkt):
-        args = PraseArg.get_parse()
+
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
 
@@ -83,15 +127,15 @@ class packetParse(object):
             macAP.append(mac)
             print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
                 "utf-8") + W + ']'
-            self.Numap += 1
+            self.__Numap += 1
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in accessPoints and mac not in macAP:
             macAP.append(mac)
             print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
                 "utf-8") + W + ']'
-            self.Numap += 1
+            self.__Numap += 1
 
-        logger.info(args.delimiter.join(fields))
+        logger.info(self.__args.delimiter.join(fields))
 
     def do_sniff(self , intf):
         self.__intf = intf
