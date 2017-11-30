@@ -9,7 +9,7 @@ Desc  :
 from scapy.all import *
 from Utils import singleton as Utils
 from PraseArg import singleton as PraseArg
-from gps import *
+#from gps import *
 from MacParser import singleton as MacParser
 import datetime
 import logging
@@ -59,8 +59,8 @@ class packetParse(object):
         gpsloc = ''
         crypto = 'None'  # instead of being blank, client has none for crypto probe request
 
-        if self.__args.gpstrack:
-            gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
+       # if self.__args.gpstrack:
+       #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
         # Logging info
         fields = []
@@ -70,8 +70,8 @@ class packetParse(object):
         fields.append(manufacture)  # Log Device Manufacture
         fields.append(ssid_probe.decode("utf-8"))  # Log SSID
         fields.append(crypto)  # Log SSID
-        fields.append(gpsloc)  # Log GPS data
-        fields.append(args.location)  # Log GPS data
+        #fields.append(gpsloc)  # Log GPS data
+        #fields.append(args.location)  # Log GPS data
         fields.append(str(get_rssi(pkt.notdecoded)))  # RSSI
 
         # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
@@ -103,12 +103,12 @@ class packetParse(object):
         manufacture = str(whmp.get_manuf(pkt.addr2))
         mac = pkt.addr2
 
-        gpsloc = ''
+       # gpsloc = ''
 
         crypto = self.CryptoInfo(pkt)
 
-        if self.__args.gpstrack:
-            gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
+       # if self.__args.gpstrack:
+       #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
         # Logging info
         fields = []
@@ -118,8 +118,8 @@ class packetParse(object):
         fields.append(manufacture)  # Log Device Manufacture
         fields.append(ssid_probe.decode("utf-8"))  # Log SSID
         fields.append(crypto)  # Log SSID
-        fields.append(gpsloc)  # Log GPS data
-        fields.append(args.location)  # Log GPS data
+       # fields.append(gpsloc)  # Log GPS data
+       # fields.append(args.location)  # Log GPS data
         fields.append(str(get_rssi(pkt.notdecoded)))  # RSSI
 
         # if AP ssid is not in clients and its not empty then print out, add  AP ssid and mac to lists
