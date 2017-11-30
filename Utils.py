@@ -10,7 +10,7 @@ Desc  :
 # Define
 import subprocess
 import psutil
-import traceback
+
 #==========================================================
 
 class Utils(object):
@@ -34,12 +34,12 @@ class Utils(object):
         if "mon" in  nicDev:
             return True
         else:
-            traceback.print_stack()
             print("getNICMonitorMode")
             monDev = str(nicDev)+"mon"
             del self.__ip_info[:]
             del self.__mac_info[:]
             self.__getNICInfo()
+            print(self.__mac_info)
             for i in range(len(self.__mac_info)):
                 if monDev==self.__mac_info[1][0]:
                     return  True
