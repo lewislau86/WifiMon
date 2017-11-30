@@ -43,6 +43,11 @@ class Utils(object):
                     return  True
             return False
 
+    def getNICMonitorModeName(self,nicDev):
+        if "mon" in  nicDev:
+            return nicDev
+        else:
+            return str(nicDev)+"mon"
 
     def __getNICInfo(self):
         info = psutil.net_if_addrs()
