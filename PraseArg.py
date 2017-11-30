@@ -23,6 +23,9 @@ class parseArg(object):
         parser = argparse.ArgumentParser(description=parseArg.DESCRIPTION)
         parser.add_argument('-i', '--interface', help="capture interface")
         parser.add_argument('-o', '--output', default='out.log', help="logging output location")
+        parser.add_argument('-d', '--delimiter', default=',', help="output field delimiter")
+        parser.add_argument('-g', '--gpstrack', default=False, help="Enable/Disable GPS Tracking")
+        parser.add_argument('-l', '--location', default='None', help="Location of survey")
         parser.add_argument('-a', '--access', default=False, help="Include AP's into the survey")
         return parser.parse_args()
 

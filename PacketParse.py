@@ -9,6 +9,7 @@ Desc  :
 from scapy.all import *
 from Utils import singleton as Utils
 from PraseArg import singleton as PraseArg
+from gps import *
 from MacParser import singleton as MacParser
 import datetime
 import logging
@@ -44,7 +45,7 @@ class packetParse(object):
             if pkt.addr2 not in noise:
                 if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == PROBE_REQUEST_SUBTYPE:
                     self.PrintPacketClient(pkt)
-                if args.access:
+                if self.__args.access:
                     if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
                         self.PrintPacketAP(pkt)
 
@@ -58,7 +59,7 @@ class packetParse(object):
         gpsloc = ''
         crypto = 'None'  # instead of being blank, client has none for crypto probe request
 
-        if args.gpstrack:
+        if self.__args.gpstrack:
             gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
         # Logging info
@@ -106,7 +107,7 @@ class packetParse(object):
 
         crypto = self.CryptoInfo(pkt)
 
-        if args.gpstrack:
+        if self.__args.gpstrack:
             gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
         # Logging info
@@ -139,7 +140,6 @@ class packetParse(object):
 
     def do_sniff(self , intf):
         self.__intf = intf
-        print  intf
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except Exception, e:
