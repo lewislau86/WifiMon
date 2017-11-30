@@ -40,7 +40,7 @@ class Utils(object):
             del self.__mac_info[:]
             self.__getNICInfo()
             for i in range(len(self.__mac_info)):
-                print(__mac_info[1][0])
+                print(self.__mac_info[1][0])
                 if monDev==self.__mac_info[1][0]:
                     return  True
             return False
