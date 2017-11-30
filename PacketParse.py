@@ -153,7 +153,7 @@ class packetParse(object):
                 "utf-8") + W + ']'
             self.__Numap += 1
 
-        logger.info(self.__args.delimiter.join(fields))
+       print(self.__args.delimiter.join(fields))
 
     def do_sniff(self , intf):
         self.__intf = intf
