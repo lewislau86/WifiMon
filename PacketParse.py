@@ -82,7 +82,7 @@ class packetParse(object):
         fields.append(crypto)  # Log SSID
         #fields.append(gpsloc)  # Log GPS data
         #fields.append(args.location)  # Log GPS data
-        fields.append(str(self.(pkt.notdecoded)))  # RSSI
+        fields.append(str(self.get_rssi(pkt.notdecoded)))  # RSSI
 
         # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
         if ssid_probe not in clients and ssid_probe != "":
