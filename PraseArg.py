@@ -17,7 +17,7 @@ import sys
 
 class parseArg(object):
     DESCRIPTION = "A command line tool for logging 802.11 probe request frames"
-    __args = argparse.Namespace
+    __args = []
 
     def parse_args(self):
         parser = argparse.ArgumentParser(description=parseArg.DESCRIPTION)
