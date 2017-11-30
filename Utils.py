@@ -34,13 +34,13 @@ class Utils(object):
         if "mon" in  nicDev:
             return True
         else:
-            print("getNICMonitorMode")
+            print("getNICMonitorMode\t"+nicDev)
             monDev = str(nicDev)+"mon"
             del self.__ip_info[:]
             del self.__mac_info[:]
             self.__getNICInfo()
-            print(self.__mac_info)
             for i in range(len(self.__mac_info)):
+                print(__mac_info[1][0])
                 if monDev==self.__mac_info[1][0]:
                     return  True
             return False
