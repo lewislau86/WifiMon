@@ -14,7 +14,6 @@ from MacParser import singleton as whmp
 import datetime
 import logging
 
-
 PROBE_REQUEST_TYPE=0
 PROBE_REQUEST_SUBTYPE=4
 AP_BROADCAST_SUBTYPE=8
@@ -64,6 +63,7 @@ class packetParse(object):
                     if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
                         self.PrintPacketAP(pkt)
 
+
     def PrintPacketClient(self , pkt):
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
@@ -109,7 +109,7 @@ class packetParse(object):
             #print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + ']' + W + ' New Client'
             self.__Numclients += 1
 
-        logger.info(self.__args.delimiter.join(fields))
+        #logger.info(self.__args.delimiter.join(fields))
 
     def PrintPacketAP(self , pkt):
 
@@ -153,7 +153,7 @@ class packetParse(object):
                 "utf-8") + W + ']'
             self.__Numap += 1
 
-       print self.__args.delimiter.join(fields)
+        logger.info(self.__args.delimiter.join(fields))
 
     def do_sniff(self , intf):
         self.__intf = intf
