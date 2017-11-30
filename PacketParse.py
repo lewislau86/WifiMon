@@ -45,9 +45,9 @@ class packetParse(object):
             if pkt.addr2 not in noise:
                 if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == PROBE_REQUEST_SUBTYPE:
                     self.PrintPacketClient(pkt)
-                #if self.__args.access:
-                #    if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
-                #        self.PrintPacketAP(pkt)
+                if self.__args.access:
+                    if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
+                        self.PrintPacketAP(pkt)
 
     def PrintPacketClient(self , pkt):
         ts = time.time()
@@ -143,6 +143,7 @@ class packetParse(object):
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except Exception, e:
+            print e
             print 'Caught exception while running sniff()', e
 
     def CryptoInfo(self , pkt):
