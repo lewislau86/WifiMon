@@ -60,7 +60,7 @@ class packetParse(object):
 
         gpsloc = ''
 
-        crypto = CryptoInfo(pkt)
+        crypto = self.CryptoInfo(pkt)
 
         if args.gpstrack:
             gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
@@ -100,6 +100,27 @@ class packetParse(object):
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except Exception, e:
             print 'Caught exception while running sniff()', e
+
+    def CryptoInfo(self , pkt):
+        p = pkt[Dot11Elt]
+        cap = pkt.sprintf("{Dot11Beacon:%Dot11Beacon.cap%}"
+                          "{Dot11ProbeResp:%Dot11ProbeResp.cap%}").split('+')
+        crypto = ""
+        while isinstance(p, Dot11Elt):
+            if p.ID == 48:
+                crypto = "WPA2"
+            elif p.ID == 221 and p.info.startswith('\x00P\xf2\x01\x01\x00'):
+                crypto = "WPA"
+            p = p.payload
+        if not crypto:
+            if 'privacy' in cap:
+                crypto = "WEP"
+            else:
+                crypto = "OPN"
+        if "0050f204104a000110104400010210" in str(pkt).encode("hex"):
+            crypto = crypto + R + " WPS"
+
+        return crypto
 
 
 
