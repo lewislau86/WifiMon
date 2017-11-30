@@ -29,6 +29,16 @@ class packetParse(object):
     def __init__(self):
         __args = PraseArg.get_parse()
 
+    def get_rssi(self, extra):
+        rssi = int(-(256 - ord(extra[-2:-1])));
+
+        if rssi not in xrange(-100, 0):
+            rssi = (-(256 - ord(extra[-4:-3])));
+
+        if rssi < -100:
+            return -1;
+    return rssi;
+
     def PacketHandler(self , pkt):
         mymac = Utils.get_mac(self.__intf)
         noise = {
@@ -72,7 +82,7 @@ class packetParse(object):
         fields.append(crypto)  # Log SSID
         #fields.append(gpsloc)  # Log GPS data
         #fields.append(args.location)  # Log GPS data
-        fields.append(str(get_rssi(pkt.notdecoded)))  # RSSI
+        fields.append(str(self.(pkt.notdecoded)))  # RSSI
 
         # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
         if ssid_probe not in clients and ssid_probe != "":
@@ -120,7 +130,7 @@ class packetParse(object):
         fields.append(crypto)  # Log SSID
        # fields.append(gpsloc)  # Log GPS data
        # fields.append(args.location)  # Log GPS data
-        fields.append(str(get_rssi(pkt.notdecoded)))  # RSSI
+        fields.append(str(self.get_rssi(pkt.notdecoded)))  # RSSI
 
         # if AP ssid is not in clients and its not empty then print out, add  AP ssid and mac to lists
         if ssid_probe not in accessPoints and ssid_probe != "":
