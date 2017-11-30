@@ -100,7 +100,7 @@ class packetParse(object):
             self.__macClient.append(mac)
             #print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
             #    "utf-8") + W + ']'
-            print '[Client:' + manufacture +'/' + mac + '] [SSID: '  ssid_probe.decode("utf-8") + ']'
+            print '[Client:' + manufacture +'/' + mac + '] [SSID: ' + ssid_probe.decode("utf-8") + ']'
             self.__Numclients += 1
         # if mac is not in the list and the probe has a broadcast (empty) then add mac to list
         elif mac not in self.__macClient and ssid_probe == "":
