@@ -22,7 +22,7 @@ AP_BROADCAST_SUBTYPE=8
 class packetParse(object):
     __intf = None
     __Numap = None
-    __Numclients = None
+    __Numclients = 0
     __Currentloc = None
     __args = ()
     __clients = []
