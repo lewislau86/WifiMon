@@ -20,7 +20,7 @@ class parseArg(object):
     __args = ()
     def __init__(self):
         self.parse_args()
-        
+
     def parse_args(self):
         parser = argparse.ArgumentParser(description=parseArg.DESCRIPTION)
         parser.add_argument('-i', '--interface', help="capture interface")
@@ -29,7 +29,8 @@ class parseArg(object):
         parser.add_argument('-g', '--gpstrack', default=False, help="Enable/Disable GPS Tracking")
         parser.add_argument('-l', '--location', default='None', help="Location of survey")
         parser.add_argument('-a', '--access', default=False, help="Include AP's into the survey")
-        return parser.parse_args()
+        self.__args = parser.parse_args()
+        return self.__args
 
     def parse_input(self, inputText):
         '''
