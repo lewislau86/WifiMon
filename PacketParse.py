@@ -25,6 +25,10 @@ class packetParse(object):
     __Numap = None
     __Currentloc = None
     __args = None
+    __clients = []
+    __macClient = []
+    __accessPoints = []
+    __macAP = []
 
     def __init__(self):
         __args = PraseArg.get_parse()
@@ -85,20 +89,20 @@ class packetParse(object):
         fields.append(str(self.get_rssi(pkt.notdecoded)))  # RSSI
 
         # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
-        if ssid_probe not in clients and ssid_probe != "":
-            clients.append(ssid_probe)
-            macClient.append(mac)
+        if ssid_probe not in self.__clients and ssid_probe != "":
+            self.__clients.append(ssid_probe)
+            self.__macClient.append(mac)
             print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
                 "utf-8") + W + ']'
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
-        elif ssid_probe in clients and mac not in macClient:
-            macClient.append(mac)
+        elif ssid_probe in self.__clients and mac not in self.__macClient:
+            self.__macClient.append(mac)
             print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
                 "utf-8") + W + ']'
             self.__Numclients += 1
         # if mac is not in the list and the probe has a broadcast (empty) then add mac to list
-        elif mac not in macClient and ssid_probe == "":
-            macClient.append(mac)
+        elif mac not in self.__macClient and ssid_probe == "":
+            self.__macClient.append(mac)
             print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + ']' + W + ' New Client'
             self.__Numclients += 1
 
