@@ -24,7 +24,7 @@ class packetParse(object):
     __intf = None
     __Numap = None
     __Currentloc = None
-    __args = None
+    __args = ()
     __clients = []
     __macClient = []
     __accessPoints = []
