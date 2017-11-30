@@ -26,7 +26,7 @@ Converts MAC addresses into a manufacturer using Wireshark's OUI database.
 See README.md.
 
 """
-from __future__ import print_function
+#from __future__ import print_function
 from collections import namedtuple
 import argparse
 import re
