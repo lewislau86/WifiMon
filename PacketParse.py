@@ -63,7 +63,7 @@ class packetParse(object):
                     self.PrintPacketClient(pkt)
                 #if self.__args.access:
                 #if pkt.type == Frame80211.Type.Management and pkt.subtype == AP_BROADCAST_SUBTYPE:
-                if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
+                 if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
                     self.PrintPacketAP(pkt)
 
 
