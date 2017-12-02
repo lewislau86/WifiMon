@@ -188,7 +188,7 @@ class packetParse(object):
             else:
                 crypto = "OPN"
         if "0050f204104a000110104400010210" in str(pkt).encode("hex"):
-            crypto = crypto + R + " WPS"
+            crypto = crypto + " WPS"
 
         return crypto
 
