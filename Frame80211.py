@@ -52,41 +52,37 @@ Data frames (数据帧:Type=10) 【注 c】
 '''
 
 
-Type = {
-    'Management':   0b00,
-    'Control':      0b01,
-    'Data':         0b10
-}
+class Type(object):
+    Management =    0b00
+    Control =       0b01
+    Data =          0b10
 
-Management = {
-    'AssReq':       0b0000,
-    'AssResp':      0b0001,
-    'ReassReq':     0b0010,
-    'ReassResp':    0b0011,
-    'ProbeReq':     0b0100,
-    'ProbeResp':    0b0101,
-    'Beacon':       0b1000,
-    'ATIM':         0b1001,
-    'DisAss':       0b1010,
-    'Deauth':       0b1100
-}
+class Management(object):
+    AssReq =    0b0000
+    AssResp =   0b0001
+    ReassReq =  0b0010
+    ReassResp = 0b0011
+    ProbeReq =  0b0100
+    ProbeResp = 0b0101
+    Beacon =    0b1000
+    ATIM =      0b1001
+    DisAss =    0b1010
+    Deauth =    0b1100
 
-Control = {
-    'PowerSave':    0b1010,
-    'RTS':          0b1011,
-    'CTS':          0b1100,
-    'ACK':          0b1101,
-    'CF-End':       0b1110,
-    'CF-End+CF-Ack': 0b1111
-}
+class Control(object):
+    PowerSave = 0b1010
+    RTS =       0b1011
+    CTS =       0b1100
+    ACK =       0b1101
+    CFEnd =     0b1110
+    CFEndCFAck= 0b1111
 
-Data = {
-    'Data':             0b0000,
-    'Data+CF-Ack':      0b0001,
-    'Data+CF-Poll':     0b0010,
-    'Data+CF-Ack+CF-Poll': 0b0011,
-    'NullData':         0b0100,
-    'CF-Ack':           0b0101,
-    'CF-Poll':          0b0110,
-    'Data+CF-Ack+CF-Poll2': 0b0111
-}
+class Data(object):
+    Data =          0b0000
+    DataCFAck =     0b0001
+    DataCFPoll =    0b0010
+    DataCFAckCFPoll = 0b0011
+    NullData =      0b0100
+    CFAck =         0b0101
+    CFPoll =        0b0110
+    DataCFAckCFPoll2 = 0b0111

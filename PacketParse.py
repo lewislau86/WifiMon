@@ -13,9 +13,10 @@ from PraseArg import singleton as PraseArg
 from MacParser import singleton as whmp
 import datetime
 import logging
+import Frame80211
 
-PROBE_REQUEST_TYPE=0
-PROBE_REQUEST_SUBTYPE=4
+#PROBE_REQUEST_TYPE=0
+#PROBE_REQUEST_SUBTYPE=4
 AP_BROADCAST_SUBTYPE=8
 
 
@@ -57,14 +58,19 @@ class packetParse(object):
         }
         if pkt.haslayer(Dot11):
             if pkt.addr2 not in noise:
-                if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == PROBE_REQUEST_SUBTYPE:
+                #if pkt.type == Frame80211.Type.Management and pkt.subtype == PROBE_REQUEST_SUBTYPE:
+                 if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
                     self.PrintPacketClient(pkt)
-                if self.__args.access:
-                    if pkt.type == PROBE_REQUEST_TYPE and pkt.subtype == AP_BROADCAST_SUBTYPE:
+                #if self.__args.access:
+                #if pkt.type == Frame80211.Type.Management and pkt.subtype == AP_BROADCAST_SUBTYPE:
+                    if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
                         self.PrintPacketAP(pkt)
 
 
     def PrintPacketClient(self , pkt):
+        '''
+
+        '''
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
 
@@ -95,7 +101,7 @@ class packetParse(object):
             self.__macClient.append(mac)
            # print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
            #     "utf-8") + W + ']'
-            print '[Client :' + manufacture + '/' + mac + '] [' + 'SSID' + ': ' + ssid_probe.decode("utf-8") + ']'
+            print '[Client:' + manufacture + '/' + mac + '] [' + 'SSID' + ': ' + ssid_probe.decode("utf-8") + ']'
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__clients and mac not in self.__macClient:
             self.__macClient.append(mac)
@@ -140,17 +146,18 @@ class packetParse(object):
         fields.append(str(self.get_rssi(pkt.notdecoded)))  # RSSI
 
         # if AP ssid is not in clients and its not empty then print out, add  AP ssid and mac to lists
-        if ssid_probe not in accessPoints and ssid_probe != "":
-            accessPoints.append(ssid_probe)
-            macAP.append(mac)
-            print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
-                "utf-8") + W + ']'
+        if ssid_probe not in self.__accessPoints and ssid_probe != "":
+            self.__accessPoints.append(ssid_probe)
+            self.__macAP.append(mac)
+            #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
+            #    "utf-8") + W + ']'
+            print('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8"))
             self.__Numap += 1
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
-        elif ssid_probe in accessPoints and mac not in macAP:
+        elif ssid_probe in accessPoints and mac not in self.__macAP:
             macAP.append(mac)
-            print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
-                "utf-8") + W + ']'
+            #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
+            #    "utf-8") + W + ']'
             self.__Numap += 1
 
         logger.info(self.__args.delimiter.join(fields))
