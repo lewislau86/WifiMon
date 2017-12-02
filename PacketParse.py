@@ -18,6 +18,8 @@ import logging
 import Frame80211
 import UiLIb
 import sys
+
+# 修复如果解析到utf-8的ssid会崩溃
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
