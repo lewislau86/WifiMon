@@ -17,6 +17,10 @@ import datetime
 import logging
 import Frame80211
 import UiLIb
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
+
 
 #PROBE_REQUEST_TYPE=0
 #PROBE_REQUEST_SUBTYPE=4
