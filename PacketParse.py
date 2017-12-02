@@ -4,7 +4,9 @@
 File  : PacketParse.py
 Author: Lewis Lau
 Date  : 2017/11/16
-Desc  : 
+Desc  :
+
+        1  还要检测隐藏的SSID
 """
 from scapy.all import *
 from Utils import singleton as Utils
@@ -14,10 +16,11 @@ from MacParser import singleton as whmp
 import datetime
 import logging
 import Frame80211
+UiLIb.CPrint.BLUE
 
 #PROBE_REQUEST_TYPE=0
 #PROBE_REQUEST_SUBTYPE=4
-AP_BROADCAST_SUBTYPE=8
+#AP_BROADCAST_SUBTYPE=8
 
 
 class packetParse(object):
@@ -151,14 +154,14 @@ class packetParse(object):
             self.__macAP.append(mac)
             #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
             #    "utf-8") + W + ']'
-            print('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8"))
+            UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8"))
             self.__Numap += 1
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__accessPoints and mac not in self.__macAP:
             self.__macAP.append(mac)
             #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
             #    "utf-8") + W + ']'
-            print('[AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + ssid_probe.decode("utf-8"))
+            UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + ssid_probe.decode("utf-8"))
             self.__Numap += 1
 
         #logger.info(self.__args.delimiter.join(fields))
