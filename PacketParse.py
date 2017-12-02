@@ -16,7 +16,7 @@ from MacParser import singleton as whmp
 import datetime
 import logging
 import Frame80211
-UiLIb.CPrint.BLUE
+import UiLIb
 
 #PROBE_REQUEST_TYPE=0
 #PROBE_REQUEST_SUBTYPE=4
@@ -104,13 +104,13 @@ class packetParse(object):
             self.__macClient.append(mac)
            # print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
            #     "utf-8") + W + ']'
-            print '[Client:' + manufacture + '/' + mac + '] [' + 'SSID' + ': ' + ssid_probe.decode("utf-8") + ']'
+            UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [' + 'SSID' + ': ' + ssid_probe.decode("utf-8") + ']')
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__clients and mac not in self.__macClient:
             self.__macClient.append(mac)
             #print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
             #    "utf-8") + W + ']'
-            print '[Client:' + manufacture +'/' + mac + '] [SSID: ' + ssid_probe.decode("utf-8") + ']'
+            UiLIb.CPrint.YELLOW('[Client:' + manufacture +'/' + mac + '] [SSID: ' + ssid_probe.decode("utf-8") + ']')
             self.__Numclients += 1
         # if mac is not in the list and the probe has a broadcast (empty) then add mac to list
         elif mac not in self.__macClient and ssid_probe == "":
