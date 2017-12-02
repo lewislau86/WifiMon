@@ -19,7 +19,7 @@ from Utils import  singleton as Utils
 from InitEnv import singleton as Init
 from PraseArg import singleton as PraseArg
 from PacketParse import  singleton as Packet
-
+import signal
 
 #logging.basicConfig(level=logging.DEBUG)
 
@@ -43,13 +43,13 @@ def main():
     else:
         print("Monitor Mode False")
 
-
+def exit(signum, frame):
+    print('You choose to stop me.')
+    exit()
 
 #==========================================================
 # Global
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("Exit")
-        pass
+    signal.signal(signal.SIGINT, exit)
+    signal.signal(signal.SIGTERM, exit)
+    main()
