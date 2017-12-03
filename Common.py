@@ -16,7 +16,7 @@ Version = "0.10"
 HelpInfo = "Help"
 
 CmdInfo = "\n\n====================================\n" \
-          "\t\tCommand Mode \r\n" \
+          "\tCommand Mode \r\n" \
           "(The sniffer worked in the background)\n" \
           "====================================\n" \
           "attack\t\t Enter attack mode\r\n" \
