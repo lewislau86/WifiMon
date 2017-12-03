@@ -64,6 +64,7 @@ class Command(object):
         elif "attack" == cmd:
             self.cmd_handle_attack()
         elif "exit" == cmd:
+            print("exit")
             sys.exit()
         elif "verbose" == cmd:
             self.leave()
