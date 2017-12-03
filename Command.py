@@ -13,6 +13,7 @@ import UiLIb
 class Command(object):
     def entry(self):
         Status.setMode(Status.cmdMode)
+        self.get_cmd()
         pass
 
     def leave(self):

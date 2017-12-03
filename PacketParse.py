@@ -27,7 +27,7 @@ import sys
 # 修复如果解析到utf-8的ssid会崩溃
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-
+conf.ipv6_enabled =False
 
 #PROBE_REQUEST_TYPE=0
 #PROBE_REQUEST_SUBTYPE=4
