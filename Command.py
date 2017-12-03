@@ -64,8 +64,7 @@ class Command(object):
         elif "attack" == cmd:
             self.cmd_handle_attack()
         elif "exit" == cmd:
-            print("exit")
-            sys.exit()
+            sys.exit(0)
         elif "verbose" == cmd:
             self.leave()
         elif "export" == cmd:
@@ -74,6 +73,9 @@ class Command(object):
             self.prompt()
         else:
             UiLIb.CPrint.PURPLE("\n\t\tError command\r\n")
+
+    def cmd_handle_exit(self):
+        sys.exit(0)
 
     def cmd_handle_save(self):
         pass
