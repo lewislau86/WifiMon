@@ -21,7 +21,7 @@ class Command(object):
         else:
             UiLIb.CPrint.YELLOW("Uninitialized!\r\n")
 
-        self.get_cmd()
+        self.cmd_loop()
         pass
 
     def leave(self):
@@ -31,6 +31,15 @@ class Command(object):
     def prompt(self):
         UiLIb.CPrint.BLUE(Common.CmdInfo)
         pass
+
+    def cmd_loop(self):
+        while True:
+            cmd = self.get_cmd()
+            if cmd in ["aa","ss"]:
+                print cmd
+            else:
+                print "cmd error"
+
 
     def get_cmd(self):
         self.prompt()
