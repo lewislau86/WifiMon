@@ -9,10 +9,18 @@ Desc  :
 import Common
 from Common import singleton as Status
 import UiLIb
+import sys
 
 class Command(object):
     def entry(self):
-        Status.setMode(Status.cmdMode)
+        if Status.verboseMode == Status.getCurrentMode():
+            Status.setMode(Status.cmdMode)
+        elif Status.cmdMode == Status.getCurrentMode():
+            # 如果已经在命令模式，仍然Ctrl+, 则退出
+            sys.exit(0)
+        else:
+            UiLIb.CPrint.YELLOW("Uninitialized!\r\n")
+
         self.get_cmd()
         pass
 
