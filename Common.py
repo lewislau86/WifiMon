@@ -19,22 +19,9 @@ CmdInfo = "Command\r\n" \
           "-h,--help\t\t\t Show help information"
 
 
-class Status(object):
-    verboseMode = 1
-    cmdMode = 2
-    __currentMode = 0
-
-    def getCurrentMode(self):
-        return self.__currentMode
-
-    def setMode(self , mode):
-        if mode==1 or mode==2:
-            self.__currentMode = mode
 
 
-# ==========================================================
-# 单例模式
-singleton = Status()
+
 #==========================================================
 
 

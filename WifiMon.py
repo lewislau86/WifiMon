@@ -23,7 +23,6 @@ from Command import  singleton as Cmd
 
 import signal
 import Common
-from Common import singleton as Status
 
 #logging.basicConfig(level=logging.DEBUG)
 
@@ -34,7 +33,6 @@ def main():
     #if False == Init.get_check_result():
     #    sys.exit()
 
-    Status.setMode(Status.verboseMode)
     nicDev = PraseArg.do_parse()
     if None != nicDev and False == Utils.getNICMonitorMode(nicDev):
         UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))

@@ -16,4 +16,15 @@ Desc  :
 
 # if __name__ == "__main__":
 #    print ('Hello world"')
-    
+
+class Verbose(object):
+    __silent = False
+
+    def setSilent(self , flag):
+        self.__silent = flag
+
+
+
+# ==========================================================
+# 单例模式
+singleton = Verbose()

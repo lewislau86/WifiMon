@@ -7,14 +7,32 @@ Date  : 2017/12/3
 Desc  : 
 """
 import Common
-from Common import singleton as Status
+from Verbose import singleton as Verbase
 import UiLIb
 import sys
 
+class Status(object):
+    verboseMode = 1
+    cmdMode = 2
+    __currentMode = 0
+
+    def getCurrentMode(self):
+        return self.__currentMode
+
+    def setMode(self , mode):
+        if mode==1 or mode==2:
+            self.__currentMode = mode
+
+
 class Command(object):
+    __status = Status()
+    def __init__(self):
+        self.__status.setMode(self.__status.verboseMode)
+
     def entry(self):
-        if Status.verboseMode == Status.getCurrentMode():
-            Status.setMode(Status.cmdMode)
+        if self.__status.verboseMode == self.__status.getCurrentMode():
+            self.__status.setMode(self.__status.cmdMode)
+            Verbase.setSilent(True)
         elif Status.cmdMode == Status.getCurrentMode():
             # 如果已经在命令模式，仍然Ctrl+, 则退出
             sys.exit(0)
@@ -22,24 +40,35 @@ class Command(object):
             UiLIb.CPrint.YELLOW("Uninitialized!\r\n")
 
         self.cmd_loop()
-        pass
 
     def leave(self):
-        Status.setMode(Status.verboseMode)
-        pass
+        self.__status.setMode(self.__status.verboseMode)
+        Verbase.setSilent(False)
 
     def prompt(self):
         UiLIb.CPrint.BLUE(Common.CmdInfo)
-        pass
 
     def cmd_loop(self):
         while True:
             cmd = self.get_cmd()
-            if cmd in ["aa","ss"]:
-                print cmd
+            if cmd in ["save","attack","exit","verbose","export"]:
+                self.cmd_handle(cmd)
             else:
-                print "cmd error"
+                UiLIb.CPrint.RED("invalid command")
 
+    def cmd_handle(self,cmd):
+        if "save" == cmd:
+            pass
+        elif "attack" == cmd:
+            pass
+        elif "exit" == cmd:
+            pass
+        elif "verbose" == cmd:
+            pass
+        elif "export" == cmd:
+            pass
+        else:
+            pass
 
     def get_cmd(self):
         self.prompt()
