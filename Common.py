@@ -23,7 +23,7 @@ CmdInfo = "====================================" \
           "\texport\t\t\t Export data to sqlite\r\n" \
           "\texit\t\t\t xit program\r\n" \
           "\thelp\t\t\t Show help information\r\n" \
-          "\tsave\t\t\t Save data as CSV format\r\n" \ 
+          "\tsave\t\t\t Save data as CSV format\r\n" \
           "\tverbose\t\t\t Displays sniffing information\r\n" \
 
 
