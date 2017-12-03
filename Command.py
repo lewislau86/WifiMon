@@ -53,6 +53,7 @@ class Command(object):
             if self.__status.getCurrentMode() == self.__status.verboseMode:
                 break
             cmd = self.get_cmd()
+            print cmd
             if cmd in ["save","attack","exit","verbose","export"]:
                 self.cmd_handle(cmd)
             else:
@@ -60,17 +61,26 @@ class Command(object):
 
     def cmd_handle(self,cmd):
         if "save" == cmd:
-            pass
+            self.cmd_handle_save()
         elif "attack" == cmd:
-            pass
+            self.cmd_handle_attack()
         elif "exit" == cmd:
             sys.exit()
         elif "verbose" == cmd:
             self.leave()
         elif "export" == cmd:
-            pass
+            self.cmd_handle_export()
         else:
             pass
+
+    def cmd_handle_save(self):
+        pass
+
+    def cmd_handle_attack(self):
+        pass
+
+    def cmd_handle_export(self):
+        pass
 
     def get_cmd(self):
         self.prompt()
