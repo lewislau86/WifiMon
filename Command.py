@@ -50,6 +50,8 @@ class Command(object):
 
     def cmd_loop(self):
         while True:
+            if self.__status.getCurrentMode() == self.__status.verboseMode:
+                break
             cmd = self.get_cmd()
             if cmd in ["save","attack","exit","verbose","export"]:
                 self.cmd_handle(cmd)
@@ -62,9 +64,9 @@ class Command(object):
         elif "attack" == cmd:
             pass
         elif "exit" == cmd:
-            pass
+            sys.exit()
         elif "verbose" == cmd:
-            pass
+            self.leave()
         elif "export" == cmd:
             pass
         else:
