@@ -16,15 +16,15 @@ Version = "0.10"
 HelpInfo = "Help"
 
 CmdInfo = "\n\n====================================\n" \
-          "\n\n\t\t\tCommand Mode \r\n" \
+          "\t\tCommand Mode \r\n" \
           "(The sniffer worked in the background)\n" \
           "====================================\n" \
-          "\tattack\t\t\t Enter attack mode\r\n" \
-          "\texport\t\t\t Export data to sqlite\r\n" \
-          "\texit\t\t\t xit program\r\n" \
-          "\thelp\t\t\t Show help information\r\n" \
-          "\tsave\t\t\t Save data as CSV format\r\n" \
-          "\tverbose\t\t\t Displays sniffing information\r\n" \
+          "attack\t\t Enter attack mode\r\n" \
+          "export\t\t Export data to sqlite\r\n" \
+          "exit\t\t xit program\r\n" \
+          "help\t\t Show help information\r\n" \
+          "save\t\t Save data as CSV format\r\n" \
+          "verbose\t\t Displays sniffing information\r\n" \
 
 
 
