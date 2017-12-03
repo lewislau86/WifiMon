@@ -53,7 +53,6 @@ class Command(object):
             if self.__status.getCurrentMode() == self.__status.verboseMode:
                 break
             cmd = self.get_cmd()
-            print cmd
             if cmd in ["save","attack","exit","verbose","export"]:
                 self.cmd_handle(cmd)
             else:
@@ -65,6 +64,7 @@ class Command(object):
         elif "attack" == cmd:
             self.cmd_handle_attack()
         elif "exit" == cmd:
+            print cmd
             sys.exit()
         elif "verbose" == cmd:
             self.leave()
