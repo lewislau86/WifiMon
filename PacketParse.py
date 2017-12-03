@@ -7,6 +7,11 @@ Date  : 2017/11/16
 Desc  :
 
         1  还要检测隐藏的SSID
+        存储要考虑下，使用csv还是leveldb做为文件数据库
+        还是sqlite
+        2  保存数据使用levelDB作为内存数据库（临时文件）
+        3 实现交互式命令行
+        4 所有输出导出到一个UI类
 """
 from scapy.all import *
 from Utils import singleton as Utils
@@ -179,7 +184,7 @@ class packetParse(object):
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)
-        print 'Caught exception while running sniff()', e
+            print 'Caught exception while running sniff()', e
 
     def CryptoInfo(self , pkt):
         p = pkt[Dot11Elt]
