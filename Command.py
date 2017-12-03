@@ -72,7 +72,7 @@ class Command(object):
         elif "help" == cmd:
             self.prompt()
         else:
-            UiLIb.CPrint.RED("\n\t\tError command\r\n")
+            UiLIb.CPrint.PURPLE("\n\t\tError command\r\n")
 
     def cmd_handle_save(self):
         pass

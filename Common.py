@@ -15,10 +15,10 @@ Version = "0.10"
 
 HelpInfo = "Help"
 
-CmdInfo = "====================================" \
+CmdInfo = "\n\n====================================\n" \
           "\n\n\t\t\tCommand Mode \r\n" \
-          "(The sniffer worked in the background)" \
-          "====================================" \
+          "(The sniffer worked in the background)\n" \
+          "====================================\n" \
           "\tattack\t\t\t Enter attack mode\r\n" \
           "\texport\t\t\t Export data to sqlite\r\n" \
           "\texit\t\t\t xit program\r\n" \
