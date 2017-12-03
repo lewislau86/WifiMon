@@ -64,14 +64,15 @@ class Command(object):
         elif "attack" == cmd:
             self.cmd_handle_attack()
         elif "exit" == cmd:
-            print cmd
             sys.exit()
         elif "verbose" == cmd:
             self.leave()
         elif "export" == cmd:
             self.cmd_handle_export()
+        elif "help" == cmd:
+            self.prompt()
         else:
-            pass
+            UiLIb.CPrint.RED("\n\t\tError command\r\n")
 
     def cmd_handle_save(self):
         pass
@@ -84,7 +85,7 @@ class Command(object):
 
     def get_cmd(self):
         self.prompt()
-        cmd = raw_input(UiLIb.fmt(UiLIb.PURPLE, "[cmd] >>>: "))
+        cmd = raw_input(UiLIb.fmt(UiLIb.PURPLE, ">>>: "))
         return cmd
 
     def get_status(self):

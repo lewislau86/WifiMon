@@ -53,18 +53,13 @@ class parseArg(object):
     def do_parse(self):
         self.__args = self.parse_args()
         if not self.__args.interface:
-            try:
-                # do while
-                while True:
-                    infInput = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Enter the 'No' ro 'NIC' to sniffing it: "))
-                    dev = self.parse_input(infInput)
-                    if dev != None:
-                        break
-                    else:
-                        UiLIb.CPrint.RED("Error input, try again")
-            except KeyboardInterrupt:
-                UiLIb.CPrint.GREEN("\n\n\t****** Good Bye ******\n\n")
-                sys.exit(0)
+            while True:
+                infInput = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Enter the 'No' ro 'NIC' to sniffing it: "))
+                dev = self.parse_input(infInput)
+                if dev != None:
+                    break
+                else:
+                    UiLIb.CPrint.RED("Error input, try again")
         else:
             dev = self.parse_input(args.interface)
         return dev
