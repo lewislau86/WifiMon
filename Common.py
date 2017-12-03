@@ -15,7 +15,8 @@ Version = "0.10"
 
 HelpInfo = "Help"
 
-CmdInfo = "Command"
+CmdInfo = "Command\r\n" \
+          "-h,--help\t\t\t Show help information"
 
 
 class Status(object):

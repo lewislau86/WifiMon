@@ -6,7 +6,7 @@ Author: Lewis Lau
 Date  : 2017/12/3
 Desc  : 
 """
-
+import Common
 from Common import singleton as Status
 import UiLIb
 
@@ -21,9 +21,11 @@ class Command(object):
         pass
 
     def prompt(self):
+        UiLIb.CPrint.BLUE(Common.CmdInfo)
         pass
 
     def get_cmd(self):
+        self.prompt()
         cmd = raw_input(UiLIb.fmt(UiLIb.PURPLE, "[cmd] >>>: "))
         return cmd
 

@@ -165,14 +165,14 @@ class packetParse(object):
             self.__macAP.append(mac)
             #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
             #    "utf-8") + W + ']'
-            UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8"))
+            UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8") + ']')
             self.__Numap += 1
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__accessPoints and mac not in self.__macAP:
             self.__macAP.append(mac)
             #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
             #    "utf-8") + W + ']'
-            UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + ssid_probe.decode("utf-8"))
+            UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + ssid_probe.decode("utf-8") + ']')
             self.__Numap += 1
 
         #logger.info(self.__args.delimiter.join(fields))
