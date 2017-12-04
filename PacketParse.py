@@ -6,11 +6,11 @@ Author: Lewis Lau
 Date  : 2017/11/16
 Desc  :
 
-        1  还要检测隐藏的SSID
+        1  还要检测隐藏的SSID     complete
         存储要考虑下，使用csv还是leveldb做为文件数据库
         还是sqlite
         2  保存数据使用levelDB作为内存数据库（临时文件）
-        3 实现交互式命令行
+        3 实现交互式命令行      complete
         4 所有输出导出到一个UI类
 """
 from scapy.all import *
@@ -24,14 +24,9 @@ import Frame80211
 import UiLIb
 import sys
 
-# 修复如果解析到utf-8的ssid会崩溃
+# Fixes the bug for parsing special characters
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-conf.ipv6_enabled =False
-
-#PROBE_REQUEST_TYPE=0
-#PROBE_REQUEST_SUBTYPE=4
-#AP_BROADCAST_SUBTYPE=8
 
 
 class packetParse(object):
@@ -75,13 +70,23 @@ class packetParse(object):
             if pkt.addr2 not in noise:
                 # if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
                 if pkt.haslayer(Dot11ProbeReq):
-                    self.PrintPacketClient(pkt)
+                    self.PacketProbeReq(pkt)
                 #if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
                 if pkt.haslayer(Dot11Beacon):
-                    self.PrintPacketAP(pkt)
+                    self.PacketBeacon(pkt)
+                if pkt.haslayer(Dot11ProbeResp):
+                    self.PacketProbeResp(pkt)
+
+    def PacketProbeResp(self, pkt):
+        mac = pkt.getlayer(Dot11).addr2
+        if mac in self.__hideSsidMac and False==self.__hideSsidDict.has_key(mac):
+            ssid = pkt.getlayer(Dot11ProbeResp).info
+            # 这里需要一个字典，保存mac：ssid的关系
+            self.__hideSsidDict[mac] = ssid
 
 
-    def PrintPacketClient(self , pkt):
+
+    def PacketProbeReq(self, pkt):
         '''
 
         '''
@@ -112,12 +117,9 @@ class packetParse(object):
             self.__macClient.append(mac)
             UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [New Client]')
             self.__Numclients += 1
-        elif mac in self.__hideSsidMac:
-            ssid = pkt.getlayer(Dot11ProbeResp).info
-            # 这里需要一个字典，保存mac：ssid的关系
-            self.__hideSsidDict[mac] = ssid
 
-    def PrintPacketAP(self , pkt):
+
+    def PacketBeacon(self, pkt):
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
 
@@ -144,11 +146,13 @@ class packetParse(object):
             UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid_probe.decode("utf-8") + ']')
             self.__Numap += 1
         elif ssid_probe=="" and mac not in self.__hideSsidMac:
+            # 第一次探测到隐藏的ssid，加入列表
+            self.__hideSsidMac.append(mac)
+        elif ssid_probe=="" and mac in self.__hideSsidMac:
             if self.__hideSsidDict.has_key(mac):
-                UiLIb.CPrint.GREEN('[Hidden-AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + self.__hideSsidDict[mac] + ']')
-            else:
-                self.__hideSsidMac.append(mac)
-
+                # 已经在列表里面，且Dot11ProbeResp时已经有了记录
+                UiLIb.CPrint.GREEN('[Hidden-AP:' + manufacture + '/' + mac + '] [' + crypto + '] \
+                        [' + 'SSID:' + self.__hideSsidDict[mac] + ']')
 
     def do_sniff(self , intf):
         self.__intf = intf
