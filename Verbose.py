@@ -14,15 +14,96 @@ Desc  :
         vLog   屏幕输出，保存日志（类型，内容）
 """
 
-# if __name__ == "__main__":
-#    print ('Hello world"')
+import csv
+import time
+import thread
+
 
 class Verbose(object):
-    __silent = False
+    __silent = False        # silent mode cache output
+    __ApInfo = [[]] * 3
+    __Client = [[]] * 3
+    __silent_ApInfo = [[]] * 4 # manufacture, mac, crypto, ssid
+    __silent_Client = [[]] * 3 # manufacture, mac, ssid
+
+    fmt = '\033[0;3{}m{}\033[0m'.format
+
+    cBLACK = 0  # 黑
+    cRED = 1  # 红
+    cGREEN = 2  # 绿
+    cYELLOW = 3  # 棕
+    cBLUE = 4  # 蓝
+    cPURPLE = 5  # 紫
+    cCYAN = 6  # 青
+    cGRAY = 7  # 灰
+
+    def __init__(self):
+        pass
+
+    def silentModeThread(self):
+        # 静默模式只缓存瑶输出到屏幕的信息
+        while True:
+            if False == self.__silent:
+                thread.exit_thread()
 
     def setSilent(self , flag):
+        if True == flag:
+            pass
+        else:
+            pass
         self.__silent = flag
 
+    def entrySilent(self):
+        thread.start_new_thread(self.silentModeThread)
+        pass
+
+    def leaveSilent(self):
+        pass
+
+    #UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
+    #UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid_probe.decode("utf-8") + ']')
+
+    def vLogAP(self, manufacture, mac, crypto,ssid):
+        # 写日志不受屏幕输出的影响
+        output = '[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid + ']'
+        self.vLogAPWrite(output)
+
+        if self.__silent == False:
+            # normal
+            self.vPrint(self.cBLUE , output)
+        else:
+            # silent
+            self.cacheAPInfo(manufacture, mac, crypto, ssid)
+
+    def vLogClient(self, manufacture, mac, ssid):
+        output = '[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid + ']'
+        self.vLogClientWrite(output)
+
+        if self.__silent == False:
+            # normal
+            self.vPrint(self.cYELLOW, output)
+        else:
+            # silent
+            self.cacheClientInfo(manufacture, mac, ssid)
+
+    def cacheAPInfo(self, manufacture, mac, crypto, ssid):
+        pass
+
+    def cacheClientInfo(self, manufacture, mac, ssid):
+        pass
+
+    def vLogAPWrite(self, output):
+        pass
+    def vLogClientWrite(self, output):
+        pass
+
+
+    def vPrint(self, color , *args):
+        if 0<=color and color<=7:
+            print self.fmt(color, *args)
+
+    def flush(self):
+        pass
 
 
 # ==========================================================

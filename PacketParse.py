@@ -44,7 +44,8 @@ class packetParse(object):
     __macClient = []
     __accessPoints = []
     __macAP = []
-
+    __hideSsidMac = []
+    __hideSsidDict = {}
     def __init__(self):
         self.__args = PraseArg.get_parse()
 
@@ -72,12 +73,11 @@ class packetParse(object):
         }
         if pkt.haslayer(Dot11):
             if pkt.addr2 not in noise:
-                #if pkt.type == Frame80211.Type.Management and pkt.subtype == PROBE_REQUEST_SUBTYPE:
-                 if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
+                # if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
+                if pkt.haslayer(Dot11ProbeReq):
                     self.PrintPacketClient(pkt)
-                #if self.__args.access:
-                #if pkt.type == Frame80211.Type.Management and pkt.subtype == AP_BROADCAST_SUBTYPE:
-                 if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
+                #if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
+                if pkt.haslayer(Dot11Beacon):
                     self.PrintPacketAP(pkt)
 
 
@@ -94,45 +94,30 @@ class packetParse(object):
         gpsloc = ''
         crypto = 'None'  # instead of being blank, client has none for crypto probe request
 
-       # if self.__args.gpstrack:
-       #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
-
-        # Logging info
-        fields = []
-        fields.append(st)  # Log Time
-        fields.append('Client')  # Log Client or AP
-        fields.append(mac)  # Log Mac Address
-        fields.append(manufacture)  # Log Device Manufacture
-        fields.append(ssid_probe.decode("utf-8"))  # Log SSID
-        fields.append(crypto)  # Log SSID
-        #fields.append(gpsloc)  # Log GPS data
-        #fields.append(args.location)  # Log GPS data
-        fields.append(str(self.get_rssi(pkt.notdecoded)))  # RSSI
+        # if self.__args.gpstrack:
+        #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
         # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
         if ssid_probe not in self.__clients and ssid_probe != "":
             self.__clients.append(ssid_probe)
             self.__macClient.append(mac)
-           # print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
-           #     "utf-8") + W + ']'
-            UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [' + 'SSID' + ': ' + ssid_probe.decode("utf-8") + ']')
+            UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__clients and mac not in self.__macClient:
             self.__macClient.append(mac)
-            #print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
-            #    "utf-8") + W + ']'
-            UiLIb.CPrint.YELLOW('[Client:' + manufacture +'/' + mac + '] [SSID: ' + ssid_probe.decode("utf-8") + ']')
+            UiLIb.CPrint.YELLOW('[Client:' + manufacture +'/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
             self.__Numclients += 1
         # if mac is not in the list and the probe has a broadcast (empty) then add mac to list
         elif mac not in self.__macClient and ssid_probe == "":
             self.__macClient.append(mac)
-            #print W + '[' + R + 'Client' + W + ':' + C + manufacture + W + '/' + B + mac + W + ']' + W + ' New Client'
+            UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [New Client]')
             self.__Numclients += 1
-
-        #logger.info(self.__args.delimiter.join(fields))
+        elif mac in self.__hideSsidMac:
+            ssid = pkt.getlayer(Dot11ProbeResp).info
+            # 这里需要一个字典，保存mac：ssid的关系
+            self.__hideSsidDict[mac] = ssid
 
     def PrintPacketAP(self , pkt):
-
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
 
@@ -147,35 +132,23 @@ class packetParse(object):
        # if self.__args.gpstrack:
        #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
-        # Logging info
-        fields = []
-        fields.append(st)  # Log Time
-        fields.append('AP')  # Log Client or AP
-        fields.append(mac)  # Log Mac Address
-        fields.append(manufacture)  # Log Device Manufacture
-        fields.append(ssid_probe.decode("utf-8"))  # Log SSID
-        fields.append(crypto)  # Log SSID
-       # fields.append(gpsloc)  # Log GPS data
-       # fields.append(args.location)  # Log GPS data
-        fields.append(str(self.get_rssi(pkt.notdecoded)))  # RSSI
-
         # if AP ssid is not in clients and its not empty then print out, add  AP ssid and mac to lists
         if ssid_probe not in self.__accessPoints and ssid_probe != "":
             self.__accessPoints.append(ssid_probe)
             self.__macAP.append(mac)
-            #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
-            #    "utf-8") + W + ']'
             UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8") + ']')
             self.__Numap += 1
         # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__accessPoints and mac not in self.__macAP:
             self.__macAP.append(mac)
-            #print W + '[' + R + 'AP' + W + ':' + C + manufacture + W + '/' + B + mac + W + '] [' + T + crypto + W + '] [' + G + 'SSID' + W + ': ' + O + ssid_probe.decode(
-            #    "utf-8") + W + ']'
-            UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + ssid_probe.decode("utf-8") + ']')
+            UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid_probe.decode("utf-8") + ']')
             self.__Numap += 1
+        elif ssid_probe=="" and mac not in self.__hideSsidMac:
+            if self.__hideSsidDict.has_key(mac):
+                UiLIb.CPrint.GREEN('[Hidden-AP:' + manufacture + '/' + mac + '] [' + crypto + '] [' + 'SSID:' + self.__hideSsidDict[mac] + ']')
+            else:
+                self.__hideSsidMac.append(mac)
 
-        #logger.info(self.__args.delimiter.join(fields))
 
     def do_sniff(self , intf):
         self.__intf = intf
