@@ -170,7 +170,6 @@ class packetParse(object):
         except select_error as exc:
             if exc[0] == errno.EINTR:
                 print "I catch it!\r\n"
-                pass
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)

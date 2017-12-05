@@ -10,6 +10,10 @@ import Common
 from Verbose import singleton as Verbase
 import UiLIb
 import sys
+from evdev import InputDevice
+from select import select
+import thread
+
 
 class Status(object):
     verboseMode = 1
@@ -29,12 +33,23 @@ class Command(object):
     def __init__(self):
         self.__status.setMode(self.__status.verboseMode)
 
+    def cmdInputThread(self ,id):
+        dev = InputDevice('/dev/input/event4')
+        while True:
+            select([dev], [], [])
+            for event in dev.read():
+                print "code:%s" % (event.code)
+        thread.exit_thread()
+
+    def init(self):
+        thread.start_new_thread(self.cmdInputThread, (2,))
+        pass
+
     def entry(self):
         if self.__status.verboseMode == self.__status.getCurrentMode():
             self.__status.setMode(self.__status.cmdMode)
             Verbase.setSilent(True)
         elif Status.cmdMode == Status.getCurrentMode():
-            # 如果已经在命令模式，仍然Ctrl+, 则退出
             #sys.exit(0)
             pass
         else:
