@@ -84,6 +84,8 @@ class packetParse(object):
                         self.PacketProbeResp(pkt)
                 except UnicodeDecodeError:
                     pass
+                except SystemExit:
+                    print("***********")
 
 
 
@@ -172,8 +174,6 @@ class packetParse(object):
             if exc[0] == errno.EINTR:
                 print "I catch it!\r\n"
                 #sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
-        except SystemExit:
-            print "SystemExit"
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)
