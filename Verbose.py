@@ -43,7 +43,7 @@ class Verbose(object):
         currrntTime = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
         csvClientName = "Client"+currrntTime+".csv"
         csvAPName = "AP"+currrntTime+".csv"
-        self.__csvAP =
+        #self.__csvAP =
     def silentModeThread(self):
         # 静默模式只缓存瑶输出到屏幕的信息
         while True:
