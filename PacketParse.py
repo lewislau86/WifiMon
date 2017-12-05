@@ -166,7 +166,7 @@ class packetParse(object):
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except KeyboardInterrupt:
-            pass
+            print("*****************")
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)
