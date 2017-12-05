@@ -164,7 +164,7 @@ class packetParse(object):
                 UiLIb.CPrint.GREEN('[Hidden-AP:' + manufacture + '/' + mac + '] [' + crypto + '] \
                         [' + 'SSID:' + self.__hideSsidDict[mac] + ']')
 
-    def do_sniff_thread(self):
+    def do_sniff(self):
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except select_error as exc:
@@ -175,10 +175,6 @@ class packetParse(object):
             msg = traceback.format_exc()  # 方式1
             print (msg)
 
-
-    def Sniffing(self , intf):
-        self.__intf = intf
-        thread.start_new_thread(self.do_sniff_thread, (2,))
 
     def CryptoInfo(self , pkt):
         p = pkt[Dot11Elt]

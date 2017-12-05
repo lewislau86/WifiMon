@@ -39,7 +39,7 @@ def main():
 
     if True ==  Utils.getNICMonitorMode(nicDev):
         nicDev = Utils.getNICMonitorModeName(nicDev)
-        Packet.Sniffing(nicDev)
+        Packet.do_sniff(nicDev)
     else:
         print("Monitor Mode False")
 
