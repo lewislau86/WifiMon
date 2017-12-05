@@ -9,10 +9,10 @@ Desc  :
 import Common
 from Verbose import singleton as Verbase
 import UiLIb
-import sys
 import threading
 import time
-
+import signal
+import os
 class Status(object):
     verboseMode = 1
     cmdMode = 2
@@ -103,9 +103,8 @@ class Command(threading.Thread):
 
     def cmd_handle_exit(self):
         self.stop()
-        time.sleep(1)
-        print("Good Bye")
-        sys.exit(0)
+        time.sleep(3)
+        os._exit(0)
 
     def cmd_handle_save(self):
         UiLIb.CPrint.PURPLE("\n\t\tSave\r\n")

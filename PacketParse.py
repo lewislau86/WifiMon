@@ -84,8 +84,7 @@ class packetParse(object):
                         self.PacketProbeResp(pkt)
                 except UnicodeDecodeError:
                     pass
-                except SystemExit:
-                    print("***********")
+
 
 
 
@@ -114,17 +113,14 @@ class packetParse(object):
         # if self.__args.gpstrack:
         #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
-        # if ssid is not in clients and its not empty then print out, add ssid and mac to lists
         if ssid_probe not in self.__clients and ssid_probe != "":
             self.__clients.append(ssid_probe)
             self.__macClient.append(mac)
             UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
-        # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__clients and mac not in self.__macClient:
             self.__macClient.append(mac)
             UiLIb.CPrint.YELLOW('[Client:' + manufacture +'/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
             self.__Numclients += 1
-        # if mac is not in the list and the probe has a broadcast (empty) then add mac to list
         elif mac not in self.__macClient and ssid_probe == "":
             self.__macClient.append(mac)
             UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [New Client]')
@@ -146,13 +142,11 @@ class packetParse(object):
        # if self.__args.gpstrack:
        #     gpsloc = str(gpsd.fix.latitude) + ':' + str(gpsd.fix.longitude)
 
-        # if AP ssid is not in clients and its not empty then print out, add  AP ssid and mac to lists
         if ssid_probe not in self.__accessPoints and ssid_probe != "":
             self.__accessPoints.append(ssid_probe)
             self.__macAP.append(mac)
             UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8") + ']')
             self.__Numap += 1
-        # if ssid is in clients but mac isnt seen before then print out and add the mac to the list
         elif ssid_probe in self.__accessPoints and mac not in self.__macAP:
             self.__macAP.append(mac)
             UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid_probe.decode("utf-8") + ']')
