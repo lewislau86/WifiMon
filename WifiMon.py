@@ -44,9 +44,10 @@ def main():
         print("Monitor Mode False")
 
 def command(signum, frame):
-    print "***\t"+str(signum)
-    print(frame)
-    Cmd.entry()
+    try:
+        Cmd.entry()
+    except TypeError:
+        pass
     #exit()
 
 #==========================================================
