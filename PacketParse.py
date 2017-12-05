@@ -27,6 +27,7 @@ import UiLIb
 import sys
 import errno
 from select import select, error as select_error
+import thread
 
 # Fixes the bug for parsing special characters
 reload(sys)
@@ -163,17 +164,21 @@ class packetParse(object):
                 UiLIb.CPrint.GREEN('[Hidden-AP:' + manufacture + '/' + mac + '] [' + crypto + '] \
                         [' + 'SSID:' + self.__hideSsidDict[mac] + ']')
 
-    def do_sniff(self , intf):
-        self.__intf = intf
+    def do_sniff_thread(self):
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except select_error as exc:
             if exc[0] == errno.EINTR:
                 print "I catch it!\r\n"
-                sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
+                #sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)
+
+
+    def Sniffing(self , intf):
+        self.__intf = intf
+        thread.start_new_thread(self.do_sniff_thread(), (2,))
 
     def CryptoInfo(self , pkt):
         p = pkt[Dot11Elt]
