@@ -4,7 +4,11 @@
 File  : UiLIb.py
 Author: Lewis Lau
 Date  : 2017/11/16
-Desc  : 
+Desc  :
+
+    这里有个严重的设计问题，
+    界面输出应该只到一个界面上，其他的界面仅仅是传递消息到界面的UI
+    否者，在线程管理上非常麻烦
 """
 
 # if __name__ == "__main__":

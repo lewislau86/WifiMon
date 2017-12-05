@@ -11,7 +11,6 @@ from Verbose import singleton as Verbase
 import UiLIb
 import sys
 import thread
-
 class Status(object):
     verboseMode = 1
     cmdMode = 2
@@ -39,7 +38,7 @@ class Command(object):
             pass
         else:
             UiLIb.CPrint.YELLOW("Uninitialized!\r\n")
-        thread.start_new_thread(self.cmd_loop(), (3,))
+        thread.start_new_thread(self.cmd_loop, (3,))
 
 
     def leave(self):
@@ -52,7 +51,7 @@ class Command(object):
     def cmd_loop(self,id):
         while True:
             if self.__status.getCurrentMode() == self.__status.verboseMode:
-                print("break")
+
                 break
             print("cmd_loop")
             cmd = self.get_cmd()
