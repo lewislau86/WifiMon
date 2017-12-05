@@ -50,6 +50,6 @@ def command(signum, frame):
 #==========================================================
 # Global
 if __name__ == "__main__":
-    #signal.signal(signal.SIGINT, command)   # 键盘中 Ctrl-C 组合键信号
+    signal.signal(signal.SIGINT, command)   # 键盘中 Ctrl-C 组合键信号
     #signal.signal(signal.SIGTERM, command) # 命令行数据 kill pid 时的信号
     main()
