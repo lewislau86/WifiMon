@@ -33,9 +33,9 @@ class Command(object):
         if self.__status.verboseMode == self.__status.getCurrentMode():
             self.__status.setMode(self.__status.cmdMode)
             Verbase.setSilent(True)
-        elif Status.cmdMode == Status.getCurrentMode():
+        #elif Status.cmdMode == Status.getCurrentMode():
             # 如果已经在命令模式，仍然Ctrl+, 则退出
-            sys.exit(0)
+        #    sys.exit(0)
         else:
             UiLIb.CPrint.YELLOW("Uninitialized!\r\n")
 
