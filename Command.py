@@ -51,7 +51,9 @@ class Command(object):
     def cmd_loop(self,id):
         while True:
             if self.__status.getCurrentMode() == self.__status.verboseMode:
+                print("break")
                 break
+            print("cmd_loop")
             cmd = self.get_cmd()
             if cmd in ["save","attack","exit","verbose","export"]:
                 self.cmd_handle(cmd)
