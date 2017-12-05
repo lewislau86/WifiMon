@@ -49,7 +49,6 @@ class Verbose(object):
         # 静默模式只缓存瑶输出到屏幕的信息
         while True:
             time.sleep(1)
-            print "** thread**"
             if False == self.__silent:
                 print "** back**"
                 thread.exit_thread()

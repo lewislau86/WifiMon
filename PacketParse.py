@@ -170,7 +170,6 @@ class packetParse(object):
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)
-            print 'Caught exception while running sniff()', e
 
     def CryptoInfo(self , pkt):
         p = pkt[Dot11Elt]
