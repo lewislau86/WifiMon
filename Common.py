@@ -21,7 +21,7 @@ CmdInfo = "\n\n====================================\n" \
           "====================================\n" \
           "attack\t\t Enter attack mode\r\n" \
           "export\t\t Export data to sqlite\r\n" \
-          "exit\t\t xit program\r\n" \
+          "exit\t\t Exit program\r\n" \
           "help\t\t Show help information\r\n" \
           "save\t\t Save data as CSV format\r\n" \
           "verbose\t\t Displays sniffing information\r\n" \

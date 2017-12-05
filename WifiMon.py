@@ -47,6 +47,9 @@ def command(signum, frame):
     Cmd.entry()
     #exit()
 
+def doExit():
+    pass
+
 #==========================================================
 # Global
 if __name__ == "__main__":

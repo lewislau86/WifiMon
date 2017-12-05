@@ -13,6 +13,8 @@ import threading
 import time
 import signal
 import os
+import  WifiMon
+
 class Status(object):
     verboseMode = 1
     cmdMode = 2
@@ -103,6 +105,7 @@ class Command(threading.Thread):
 
     def cmd_handle_exit(self):
         self.stop()
+        WifiMon.doExit()
         time.sleep(1)
         os._exit(0)
 

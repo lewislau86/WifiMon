@@ -28,6 +28,7 @@ import sys
 import errno
 from select import select, error as select_error
 import thread
+from Verbose import singleton as Verbose
 
 # Fixes the bug for parsing special characters
 reload(sys)
@@ -145,11 +146,13 @@ class packetParse(object):
         if ssid_probe not in self.__accessPoints and ssid_probe != "":
             self.__accessPoints.append(ssid_probe)
             self.__macAP.append(mac)
-            UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8") + ']')
+            #UiLIb.CPrint.BLUE('[AP:' + manufacture +'/'+ mac + '] ['+crypto+'] ['+'SSID:'+ssid_probe.decode("utf-8") + ']')
+            Verbose.vLogAP(manufacture , mac,crypto,ssid_probe.decode("utf-8"))
             self.__Numap += 1
         elif ssid_probe in self.__accessPoints and mac not in self.__macAP:
             self.__macAP.append(mac)
-            UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid_probe.decode("utf-8") + ']')
+            #UiLIb.CPrint.BLUE('[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid_probe.decode("utf-8") + ']')
+            Verbose.vLogAP(manufacture, mac, crypto, ssid_probe.decode("utf-8"))
             self.__Numap += 1
         elif ssid_probe=="" and mac not in self.__hideSsidMac:
             # 第一次探测到隐藏的ssid，加入列表
