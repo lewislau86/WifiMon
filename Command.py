@@ -38,8 +38,8 @@ class Command(object):
             pass
         else:
             UiLIb.CPrint.YELLOW("Uninitialized!\r\n")
+        thread.start_new_thread(self.cmd_loop(), (3,))
 
-        self.cmd_loop()
 
     def leave(self):
         self.__status.setMode(self.__status.verboseMode)
@@ -48,7 +48,7 @@ class Command(object):
     def prompt(self):
         UiLIb.CPrint.BLUE(Common.CmdInfo)
 
-    def cmd_loop(self):
+    def cmd_loop(self,id):
         while True:
             if self.__status.getCurrentMode() == self.__status.verboseMode:
                 break
