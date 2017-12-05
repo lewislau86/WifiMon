@@ -164,7 +164,8 @@ class packetParse(object):
                 UiLIb.CPrint.GREEN('[Hidden-AP:' + manufacture + '/' + mac + '] [' + crypto + '] \
                         [' + 'SSID:' + self.__hideSsidDict[mac] + ']')
 
-    def do_sniff(self):
+    def do_sniff(self,intf):
+        self.__intf == intf
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
         except select_error as exc:
