@@ -117,14 +117,17 @@ class packetParse(object):
         if ssid_probe not in self.__clients and ssid_probe != "":
             self.__clients.append(ssid_probe)
             self.__macClient.append(mac)
-            UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
+            #UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
+            Verbose.vLogClient(manufacture,mac,ssid_probe.decode("utf-8"))
         elif ssid_probe in self.__clients and mac not in self.__macClient:
             self.__macClient.append(mac)
-            UiLIb.CPrint.YELLOW('[Client:' + manufacture +'/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
+            #UiLIb.CPrint.YELLOW('[Client:' + manufacture +'/' + mac + '] [SSID:' + ssid_probe.decode("utf-8") + ']')
+            Verbose.vLogClient(manufacture, mac, ssid_probe.decode("utf-8"))
             self.__Numclients += 1
         elif mac not in self.__macClient and ssid_probe == "":
             self.__macClient.append(mac)
-            UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [New Client]')
+            #UiLIb.CPrint.YELLOW('[Client:' + manufacture + '/' + mac + '] [New Client]')
+            Verbose.vLogClient(manufacture, mac, "New Client")
             self.__Numclients += 1
 
 

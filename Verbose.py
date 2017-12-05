@@ -82,6 +82,9 @@ class Verbose(object):
             # silent
             self.cacheAPInfo(manufacture, mac, crypto, ssid)
 
+    def vLogHiddenAP(self,manufacture, mac, crypto,ssid):
+        pass
+
     def vLogClient(self, manufacture, mac, ssid):
         output = '[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid + ']'
         self.vLogClientWrite(output)
