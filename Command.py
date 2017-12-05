@@ -78,7 +78,7 @@ class Command(object):
         sys.exit(0)
 
     def cmd_handle_save(self):
-        pass
+        UiLIb.CPrint.PURPLE("\n\t\tSave\r\n")
 
     def cmd_handle_attack(self):
         pass

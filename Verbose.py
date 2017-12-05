@@ -25,6 +25,8 @@ class Verbose(object):
     __Client = [[]] * 3
     __silent_ApInfo = [[]] * 4 # manufacture, mac, crypto, ssid
     __silent_Client = [[]] * 3 # manufacture, mac, ssid
+    __csvAP = ""
+    __csvClient = ""
 
     fmt = '\033[0;3{}m{}\033[0m'.format
 
@@ -38,8 +40,10 @@ class Verbose(object):
     cGRAY = 7  # 灰
 
     def __init__(self):
-        pass
-
+        currrntTime = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
+        csvClientName = "Client"+currrntTime+".csv"
+        csvAPName = "AP"+currrntTime+".csv"
+        self.__csvAP =
     def silentModeThread(self):
         # 静默模式只缓存瑶输出到屏幕的信息
         while True:
@@ -48,15 +52,16 @@ class Verbose(object):
 
     def setSilent(self , flag):
         if True == flag:
-            pass
+            self.entrySilent()
         else:
-            pass
+            self.leaveSilent()
         self.__silent = flag
 
     def entrySilent(self):
         thread.start_new_thread(self.silentModeThread)
         pass
 
+    # 离开静默模式，要快速显示缓存的数据
     def leaveSilent(self):
         pass
 
@@ -101,7 +106,7 @@ class Verbose(object):
     def vPrint(self, color , *args):
         if 0<=color and color<=7:
             print self.fmt(color, *args)
-
+    # 程序退出时，快速写日志
     def flush(self):
         pass
 
