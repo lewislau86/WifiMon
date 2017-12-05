@@ -17,6 +17,7 @@ Desc  :
 import csv
 import time
 import thread
+import os
 
 
 class Verbose(object):
@@ -41,6 +42,8 @@ class Verbose(object):
 
     def __init__(self):
         currrntTime = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
+        if False==os.path.exists("./output/"):
+            os.makedirs("./output/")
         self.__csvClientName = "./output/Client-"+currrntTime+".csv"
         self.__csvAPName = "./output/AP-"+currrntTime+".csv"
 
@@ -73,7 +76,7 @@ class Verbose(object):
     def vLogAP(self, manufacture, mac, crypto,ssid):
         # 写日志不受屏幕输出的影响
         output = '[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid + ']'
-        self.vLogAPWrite(output)
+        self.vLogAPWrite(manufacture,mac,crypto,ssid)
 
         if self.__silent == False:
             # normal
@@ -87,7 +90,7 @@ class Verbose(object):
 
     def vLogClient(self, manufacture, mac, ssid):
         output = '[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid + ']'
-        self.vLogClientWrite(output)
+        self.vLogClientWrite(manufacture,mac,ssid)
 
         if self.__silent == False:
             # normal
@@ -102,18 +105,21 @@ class Verbose(object):
     def cacheClientInfo(self, manufacture, mac, ssid):
         pass
 
-    def vLogAPWrite(self, output):
-        print(self.__csvAPName,)
+    def vLogAPWrite(self, manufacture,mac,crypto,ssid):
         fpcsv = open(self.__csvAPName, 'a')  # 设置newline，否则两行之间会空一行
         writer = csv.writer(fpcsv)
-        writer.writerow(output)
+        writer.writerow(manufacture)
+        writer.writerow(mac)
+        writer.writerow(crypto)
+        writer.writerow(ssid)
         fpcsv.close()
 
-    def vLogClientWrite(self, output):
-        print(self.__csvClientName,)
+    def vLogClientWrite(self, manufacture,mac,ssid):
         fpcsv = open(self.__csvClientName, 'a')  # 设置newline，否则两行之间会空一行
         writer = csv.writer(fpcsv)
-        writer.writerow(output)
+        writer.writerow(manufacture)
+        writer.writerow(mac)
+        writer.writerow(ssid)
         fpcsv.close()
 
 
