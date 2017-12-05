@@ -51,6 +51,7 @@ class Verbose(object):
             time.sleep(1)
             print "** thread**"
             if False == self.__silent:
+                print "** back**"
                 thread.exit_thread()
 
     def setSilent(self , flag):
