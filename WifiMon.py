@@ -32,7 +32,7 @@ def main():
     # 初始化失败,提示必要依赖关系,退出
     #if False == Init.get_check_result():
     #    sys.exit()
-    Cmd.init()
+
     nicDev = PraseArg.do_parse()
     if None != nicDev and False == Utils.getNICMonitorMode(nicDev):
         UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))
@@ -42,7 +42,6 @@ def main():
         Packet.do_sniff(nicDev)
     else:
         print("Monitor Mode False")
-
 
 def command(signum, frame):
     try:
@@ -54,4 +53,6 @@ def command(signum, frame):
 #==========================================================
 # Global
 if __name__ == "__main__":
+    #signal.signal(signal.SIGINT, command)   # 键盘中 Ctrl-C 组合键信号
+    #signal.signal(signal.SIGTERM, command) # 命令行数据 kill pid 时的信号
     main()
