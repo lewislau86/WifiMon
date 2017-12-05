@@ -25,6 +25,7 @@ import logging
 import Frame80211
 import UiLIb
 import sys
+import errno
 
 # Fixes the bug for parsing special characters
 reload(sys)
