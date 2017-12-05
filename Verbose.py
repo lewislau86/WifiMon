@@ -45,7 +45,7 @@ class Verbose(object):
         csvAPName = "./output/AP"+currrntTime+".csv"
         #self.__csvAP =
 
-    def silentModeThread(self):
+    def silentModeThread(self ,id):
         # 静默模式只缓存瑶输出到屏幕的信息
         while True:
             time.sleep(1)
@@ -61,7 +61,7 @@ class Verbose(object):
         self.__silent = flag
 
     def entrySilent(self):
-        thread.start_new_thread(self.silentModeThread)
+        thread.start_new_thread(self.silentModeThread , (1,))
         pass
 
     # 离开静默模式，要快速显示缓存的数据
