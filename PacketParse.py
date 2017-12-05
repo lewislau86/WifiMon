@@ -26,6 +26,7 @@ import Frame80211
 import UiLIb
 import sys
 import errno
+from select import select, error as select_error
 
 # Fixes the bug for parsing special characters
 reload(sys)
