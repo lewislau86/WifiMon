@@ -29,7 +29,7 @@ class Status(object):
 class Command(threading.Thread):
     __status = Status()
 
-    def __init__(self):
+    def __init__(self,*args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.__flag = threading.Event()  # 用于暂停线程的标识
         self.__flag.set()  # 设置为True
