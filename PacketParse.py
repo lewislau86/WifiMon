@@ -12,6 +12,7 @@ Desc  :
         2  保存数据使用levelDB作为内存数据库（临时文件）
         3 实现交互式命令行      complete
         4 所有输出导出到一个UI类
+        5 模拟各种wifi环境测试
 """
 from scapy.all import *
 from Utils import singleton as Utils
@@ -69,13 +70,18 @@ class packetParse(object):
         if pkt.haslayer(Dot11):
             if pkt.addr2 not in noise:
                 # if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
-                if pkt.haslayer(Dot11ProbeReq):
-                    self.PacketProbeReq(pkt)
-                #if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
-                if pkt.haslayer(Dot11Beacon):
-                    self.PacketBeacon(pkt)
-                if pkt.haslayer(Dot11ProbeResp):
-                    self.PacketProbeResp(pkt)
+                try:
+                    if pkt.haslayer(Dot11ProbeReq):
+                        self.PacketProbeReq(pkt)
+                        # if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
+                    if pkt.haslayer(Dot11Beacon):
+                        self.PacketBeacon(pkt)
+                    if pkt.haslayer(Dot11ProbeResp):
+                        self.PacketProbeResp(pkt)
+                except UnicodeDecodeError:
+                    pass
+
+
 
     def PacketProbeResp(self, pkt):
         mac = pkt.getlayer(Dot11).addr2
