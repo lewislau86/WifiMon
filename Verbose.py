@@ -41,8 +41,8 @@ class Verbose(object):
 
     def __init__(self):
         currrntTime = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
-        csvClientName = "Client"+currrntTime+".csv"
-        csvAPName = "AP"+currrntTime+".csv"
+        csvClientName = "./output/Client"+currrntTime+".csv"
+        csvAPName = "./output/AP"+currrntTime+".csv"
         #self.__csvAP =
 
     def silentModeThread(self):

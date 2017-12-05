@@ -6,7 +6,8 @@ Author: Lewis Lau
 Date  : 2017/11/16
 Desc  :
 
-        1  还要检测隐藏的SSID     complete
+        1  还要检测隐藏的SSID
+            检测隐藏SSID可以主动攻击使它下线，等待重连
         存储要考虑下，使用csv还是leveldb做为文件数据库
         还是sqlite
         2  保存数据使用levelDB作为内存数据库（临时文件）
@@ -164,6 +165,8 @@ class packetParse(object):
         self.__intf = intf
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
+        except KeyboardInterrupt:
+            pass
         except Exception, e:
             msg = traceback.format_exc()  # 方式1
             print (msg)
