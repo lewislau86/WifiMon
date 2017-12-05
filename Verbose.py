@@ -103,6 +103,7 @@ class Verbose(object):
         pass
 
     def vLogAPWrite(self, output):
+        print(self.__csvAPName,)
         fpcsv = open(self.__csvAPName, 'a')  # 设置newline，否则两行之间会空一行
         writer = csv.writer(fpcsv)
         writer.writerow(output)
