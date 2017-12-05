@@ -48,6 +48,8 @@ class Verbose(object):
     def silentModeThread(self):
         # 静默模式只缓存瑶输出到屏幕的信息
         while True:
+            time.sleep(1)
+            print "** thread**"
             if False == self.__silent:
                 thread.exit_thread()
 
@@ -59,7 +61,7 @@ class Verbose(object):
         self.__silent = flag
 
     def entrySilent(self):
-        #thread.start_new_thread(self.silentModeThread)
+        thread.start_new_thread(self.silentModeThread)
         pass
 
     # 离开静默模式，要快速显示缓存的数据

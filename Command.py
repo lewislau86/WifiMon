@@ -30,7 +30,6 @@ class Command(object):
         self.__status.setMode(self.__status.verboseMode)
 
     def entry(self):
-        print self.__status
         if self.__status.verboseMode == self.__status.getCurrentMode():
             self.__status.setMode(self.__status.cmdMode)
             Verbase.setSilent(True)
