@@ -108,18 +108,13 @@ class Verbose(object):
     def vLogAPWrite(self, manufacture,mac,crypto,ssid):
         fpcsv = open(self.__csvAPName, 'a')  # 设置newline，否则两行之间会空一行
         writer = csv.writer(fpcsv)
-        writer.writerow(manufacture)
-        writer.writerow(mac)
-        writer.writerow(crypto)
-        writer.writerow(ssid)
+        writer.writerow([manufacture,mac,crypto,ssid])
         fpcsv.close()
 
     def vLogClientWrite(self, manufacture,mac,ssid):
         fpcsv = open(self.__csvClientName, 'a')  # 设置newline，否则两行之间会空一行
         writer = csv.writer(fpcsv)
-        writer.writerow(manufacture)
-        writer.writerow(mac)
-        writer.writerow(ssid)
+        writer.writerow([manufacture,mac,ssid])
         fpcsv.close()
 
 
