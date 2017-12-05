@@ -102,6 +102,8 @@ class Command(threading.Thread):
             UiLIb.CPrint.PURPLE("\n\t\tError command\r\n")
 
     def cmd_handle_exit(self):
+        self.stop()
+        time.sleep(1)
         print("ssss")
         sys.exit(0)
 
