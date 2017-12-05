@@ -49,20 +49,15 @@ class Command(object):
         UiLIb.CPrint.BLUE(Common.CmdInfo)
 
     def cmd_loop(self,id):
-        try:
-            while True:
-                if self.__status.getCurrentMode() == self.__status.verboseMode:
-                    break
+        while True:
+            if self.__status.getCurrentMode() == self.__status.verboseMode:
+                break
 
-                cmd = self.get_cmd()
-                if cmd in ["save", "attack", "exit", "verbose", "export"]:
-                    self.cmd_handle(cmd)
-                else:
-                    UiLIb.CPrint.RED("invalid command")
-        except KeyboardInterrupt:
-            print("**********Exit*******")
-
-
+            cmd = self.get_cmd()
+            if cmd in ["save","attack","exit","verbose","export"]:
+                self.cmd_handle(cmd)
+            else:
+                UiLIb.CPrint.RED("invalid command")
 
     def cmd_handle(self,cmd):
         if "save" == cmd:
