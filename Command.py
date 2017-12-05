@@ -103,7 +103,7 @@ class Command(threading.Thread):
 
     def cmd_handle_exit(self):
         self.stop()
-        time.sleep(3)
+        time.sleep(1)
         os._exit(0)
 
     def cmd_handle_save(self):
