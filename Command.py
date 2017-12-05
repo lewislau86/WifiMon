@@ -104,7 +104,7 @@ class Command(threading.Thread):
     def cmd_handle_exit(self):
         self.stop()
         time.sleep(1)
-        print("ssss")
+        print("Good Bye")
         sys.exit(0)
 
     def cmd_handle_save(self):
