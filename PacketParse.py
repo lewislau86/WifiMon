@@ -31,8 +31,8 @@ import thread
 
 # Fixes the bug for parsing special characters
 reload(sys)
-#sys.setdefaultencoding( "utf-8" )
-sys.setdefaultencoding('gbk')
+sys.setdefaultencoding( "utf-8" )
+#sys.setdefaultencoding('gbk')
 
 class packetParse(object):
     __intf = None
