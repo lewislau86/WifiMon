@@ -25,8 +25,8 @@ class Verbose(object):
     __Client = [[]] * 3
     __silent_ApInfo = [[]] * 4 # manufacture, mac, crypto, ssid
     __silent_Client = [[]] * 3 # manufacture, mac, ssid
-    __csvAP = ""
-    __csvClient = ""
+    __csvClientName = ""
+    __csvAPName = ""
 
     fmt = '\033[0;3{}m{}\033[0m'.format
 
@@ -41,9 +41,9 @@ class Verbose(object):
 
     def __init__(self):
         currrntTime = time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime(time.time()))
-        csvClientName = "./output/Client"+currrntTime+".csv"
-        csvAPName = "./output/AP"+currrntTime+".csv"
-        #self.__csvAP =
+        csvClientName = "./output/Client-"+currrntTime+".csv"
+        csvAPName = "./output/AP-"+currrntTime+".csv"
+
 
     def silentModeThread(self ,id):
         # 静默模式只缓存瑶输出到屏幕的信息
@@ -103,9 +103,16 @@ class Verbose(object):
         pass
 
     def vLogAPWrite(self, output):
-        pass
+        fpcsv = open(self.__csvAPName, 'w', newline='')  # 设置newline，否则两行之间会空一行
+        writer = csv.writer(fpcsv)
+        writer.writerow(output)
+        fpcsv.close()
+
     def vLogClientWrite(self, output):
-        pass
+        fpcsv = open(self.__csvClientName, 'w', newline='')  # 设置newline，否则两行之间会空一行
+        writer = csv.writer(fpcsv)
+        writer.writerow(output)
+        fpcsv.close()
 
 
     def vPrint(self, color , *args):

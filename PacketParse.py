@@ -14,6 +14,7 @@ Desc  :
         3 实现交互式命令行      complete
         4 所有输出导出到一个UI类
         5 模拟各种wifi环境测试
+        6 为了辅助检测,还需要攻击一些wifi
 """
 from scapy.all import *
 from Utils import singleton as Utils
