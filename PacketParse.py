@@ -69,12 +69,12 @@ class packetParse(object):
         }
         if pkt.haslayer(Dot11):
             if pkt.addr2 not in noise:
-                # if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
                 try:
-                    if pkt.haslayer(Dot11ProbeReq):
+                    if pkt.type == Frame80211.Type.Management  and pkt.subtype == Frame80211.Management.ProbeReq:
+                    #if pkt.haslayer(Dot11ProbeReq):
                         self.PacketProbeReq(pkt)
-                        # if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
-                    if pkt.haslayer(Dot11Beacon):
+                    if pkt.type == Frame80211.Type.Management and pkt.subtype == Frame80211.Management.Beacon:
+                    #if pkt.haslayer(Dot11Beacon):
                         self.PacketBeacon(pkt)
                     if pkt.haslayer(Dot11ProbeResp):
                         self.PacketProbeResp(pkt)
