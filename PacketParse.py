@@ -178,7 +178,7 @@ class packetParse(object):
 
     def Sniffing(self , intf):
         self.__intf = intf
-        thread.start_new_thread(self.do_sniff_thread(), (2,))
+        thread.start_new_thread(self.do_sniff_thread, (2,))
 
     def CryptoInfo(self , pkt):
         p = pkt[Dot11Elt]
