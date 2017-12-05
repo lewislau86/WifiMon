@@ -166,8 +166,8 @@ class packetParse(object):
         self.__intf = intf
         try:
             sniff(iface=self.__intf, prn=self.PacketHandler, store=0)
-        except socket.error as (code, msg):
-            if code == errno.EINTR:
+        except select_error as exc:
+            if exc[0] == errno.EINTR:
                 print "I catch it!\r\n"
                 pass
         except Exception, e:
