@@ -47,7 +47,7 @@ def command(signum, frame):
     try:
         Cmd.entry()
     except TypeError:
-        pass
+        sys.exit(0)
     #exit()
 
 #==========================================================
