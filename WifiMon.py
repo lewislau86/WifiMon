@@ -45,6 +45,7 @@ def main():
 
 def command(signum, frame):
     print "***\t"+str(signum)
+    print(frame)
     Cmd.entry()
     #exit()
 
