@@ -44,6 +44,7 @@ def main():
         print("Monitor Mode False")
 
 def command(signum, frame):
+    print "***\t"+signum
     Cmd.entry()
     #exit()
 

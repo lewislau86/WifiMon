@@ -168,7 +168,6 @@ class packetParse(object):
         except KeyboardInterrupt:
             pass
         except Exception, e:
-            print IOError
             msg = traceback.format_exc()  # 方式1
             print (msg)
             print 'Caught exception while running sniff()', e
