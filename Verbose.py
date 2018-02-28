@@ -49,7 +49,7 @@ class Verbose(object):
 
 
     def silentModeThread(self ,id):
-        # 静默模式只缓存瑶输出到屏幕的信息
+        # 静默模式只缓存输出到屏幕的信息
         while True:
             time.sleep(1)
             if False == self.__silent:
@@ -81,9 +81,7 @@ class Verbose(object):
         if self.__silent == False:
             # normal
             self.vPrint(self.cBLUE , output)
-        else:
-            # silent
-            self.cacheAPInfo(manufacture, mac, crypto, ssid)
+        self.vLogAPWrite(manufacture,mac,crypto,ssid)
 
     def vLogHiddenAP(self,manufacture, mac, crypto,ssid):
         pass
@@ -95,15 +93,8 @@ class Verbose(object):
         if self.__silent == False:
             # normal
             self.vPrint(self.cYELLOW, output)
-        else:
-            # silent
-            self.cacheClientInfo(manufacture, mac, ssid)
+        self.vLogClientWrite(manufacture,mac,ssid)
 
-    def cacheAPInfo(self, manufacture, mac, crypto, ssid):
-        pass
-
-    def cacheClientInfo(self, manufacture, mac, ssid):
-        pass
 
     def vLogAPWrite(self, manufacture,mac,crypto,ssid):
         fpcsv = open(self.__csvAPName, 'a')  # 设置newline，否则两行之间会空一行

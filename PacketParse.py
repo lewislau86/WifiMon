@@ -48,6 +48,7 @@ class packetParse(object):
     __macAP = []
     __hideSsidMac = []
     __hideSsidDict = {}
+
     def __init__(self):
         self.__args = PraseArg.get_parse()
 

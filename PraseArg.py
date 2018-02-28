@@ -29,6 +29,7 @@ class parseArg(object):
         parser.add_argument('-g', '--gpstrack', default=False, help="Enable/Disable GPS Tracking")
         parser.add_argument('-l', '--location', default='None', help="Location of survey")
         parser.add_argument('-a', '--access', default=False, help="Include AP's into the survey")
+        parser.add_argument('-f', '--fake', default=False, help="Enable the fake mode.")
         self.__args = parser.parse_args()
         return self.__args
 
