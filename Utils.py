@@ -87,6 +87,17 @@ class Utils(object):
         except OSError, e:
             return e.errno, None
 
+    def runCmdShell(self , cmd):
+        try:
+            p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
+            ret = p.wait()
+            if p.returncode == 0:
+                return ret, p.stdout.read()
+            else:
+                return ret, None
+        except OSError, e:
+            return e.errno, None
+
 # ==========================================================
 # 单例模式
 singleton = Utils()

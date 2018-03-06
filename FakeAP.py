@@ -33,18 +33,16 @@ class FakeAP(object):
         iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
         iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
         '''
-        print("runIptableRuleInit")
-        str = Utils.runCmd("iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
-        print(str)
-        Utils.runCmd("iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
-        Utils.runCmd("iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT")
+        Utils.runCmdShell("/sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
+        Utils.runCmdShell("/sbin/iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
+        Utils.runCmdShell("/sbin/iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT")
 
     def runHostapd(self):
         '''
         hostapd /etc/hostapd/hostapd.conf
         '''
         print("runHostapd")
-        ret,err = Utils.runCmd("hostapd /etc/hostapd/hostapd.conf")
+        ret,err = Utils.runCmdShell("hostapd /etc/hostapd/hostapd.conf")
         print(ret,err)
 
     def runUdhcpd(self):
@@ -52,7 +50,7 @@ class FakeAP(object):
         udhcpd -f /etc/udhcpd.conf
         '''
         print("runUdhcpd")
-        Utils.runCmd("udhcpd -f /etc/udhcpd.conf")
+        Utils.runCmdShell("udhcpd -f /etc/udhcpd.conf")
 
     def setHostapdConf(self,ssid,pwd):
         confstr  = conf.format(ssid,pwd)
