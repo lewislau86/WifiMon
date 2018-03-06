@@ -32,7 +32,6 @@ def main():
     # 初始化失败,提示必要依赖关系,退出
     #if False == Init.get_check_result():
     #    sys.exit()
-
     nicDev = PraseArg.do_parse()
     if None != nicDev and False == Utils.getNICMonitorMode(nicDev):
         UiLIb.CPrint.GREEN("Monitor mode status :" + str(Utils.enableNICMonitorMode(nicDev)))
@@ -42,6 +41,7 @@ def main():
         Packet.do_sniff(nicDev)
     else:
         print("Monitor Mode False")
+
 
 def command(signum, frame):
     Cmd.entry()

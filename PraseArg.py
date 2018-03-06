@@ -62,7 +62,7 @@ class parseArg(object):
                 else:
                     UiLIb.CPrint.RED("Error input, try again")
         else:
-            dev = self.parse_input(args.interface)
+            dev = self.parse_input(self.__args.interface)
         return dev
 
     def get_parse(self):

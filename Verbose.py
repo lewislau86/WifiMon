@@ -18,7 +18,7 @@ import csv
 import time
 import thread
 import os
-
+from PraseArg import singleton as PraseArg
 
 class Verbose(object):
     __silent = False        # silent mode cache output
@@ -28,6 +28,7 @@ class Verbose(object):
     __silent_Client = [[]] * 3 # manufacture, mac, ssid
     __csvClientName = ""
     __csvAPName = ""
+    __args = PraseArg.get_parse()
 
     fmt = '\033[0;3{}m{}\033[0m'.format
 
@@ -87,13 +88,14 @@ class Verbose(object):
         pass
 
     def vLogClient(self, manufacture, mac, ssid):
-        output = '[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid + ']'
-        self.vLogClientWrite(manufacture,mac,ssid)
+        if self.__args.fake == False:
+            output = '[Client:' + manufacture + '/' + mac + '] [SSID:' + ssid + ']'
+            self.vLogClientWrite(manufacture,mac,ssid)
 
-        if self.__silent == False:
-            # normal
-            self.vPrint(self.cYELLOW, output)
-        self.vLogClientWrite(manufacture,mac,ssid)
+            if self.__silent == False:
+                # normal
+                self.vPrint(self.cYELLOW, output)
+            self.vLogClientWrite(manufacture,mac,ssid)
 
 
     def vLogAPWrite(self, manufacture,mac,crypto,ssid):
