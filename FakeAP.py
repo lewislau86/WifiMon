@@ -70,7 +70,8 @@ class FakeAP(object):
 
     def fakeWifi(self,ssid):
         print("*DEBUG*\t\t fake Wifi running")
-        pwd = self.getPwdbySSID(ssid)
+        print(Verbose.__ApInfo)
+        #pwd = self.getPwdbySSID(ssid)
         print("*DEBUG*\t\t pwd:"+pwd)
         self.runFakeWifi(ssid,pwd)
 # ==========================================================
