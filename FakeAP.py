@@ -44,7 +44,8 @@ class FakeAP(object):
         hostapd /etc/hostapd/hostapd.conf
         '''
         print("runHostapd")
-        Utils.runCmd("hostapd /etc/hostapd/hostapd.conf")
+        ret,err = Utils.runCmd("hostapd /etc/hostapd/hostapd.conf")
+        print(ret,err)
 
     def runUdhcpd(self):
         '''
