@@ -56,7 +56,9 @@ class FakeAP(object):
         f.close()
 
     def getPwdbySSID(self,ssid):
-        for apInfo in Verbose.__ApInfo:
+        __apInfo = Verbose.get_apInfo()
+        print(__apInfo)
+        for apInfo in __apInfo:
             if apInfo['ssid'] == ssid:
                 mac = apInfo['mac']
         # 查询密码
@@ -70,10 +72,11 @@ class FakeAP(object):
 
     def fakeWifi(self,ssid):
         print("*DEBUG*\t\t fake Wifi running")
-        print(Verbose.__ApInfo)
-        #pwd = self.getPwdbySSID(ssid)
+        pwd = self.getPwdbySSID(ssid)
         print("*DEBUG*\t\t pwd:"+pwd)
         self.runFakeWifi(ssid,pwd)
+
+
 # ==========================================================
 # 单例模式
 singleton = FakeAP()

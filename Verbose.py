@@ -124,6 +124,9 @@ class Verbose(object):
     def flush(self):
         pass
 
+    def get_apInfo(self):
+        return self.__ApInfo
+
 
 # ==========================================================
 # 单例模式
