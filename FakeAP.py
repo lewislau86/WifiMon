@@ -33,6 +33,7 @@ class FakeAP(object):
         iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
         iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
         '''
+        print("runIptableRuleInit")
         str = Utils.runCmd("iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
         print(str)
         Utils.runCmd("iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
@@ -42,12 +43,14 @@ class FakeAP(object):
         '''
         hostapd /etc/hostapd/hostapd.conf
         '''
+        print("runHostapd")
         Utils.runCmd("hostapd /etc/hostapd/hostapd.conf")
 
     def runUdhcpd(self):
         '''
         udhcpd -f /etc/udhcpd.conf
         '''
+        print("runUdhcpd")
         Utils.runCmd("udhcpd -f /etc/udhcpd.conf")
 
     def setHostapdConf(self,ssid,pwd):
