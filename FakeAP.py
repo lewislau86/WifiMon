@@ -69,7 +69,9 @@ class FakeAP(object):
         self.runHostapd()
 
     def fakeWifi(self,ssid):
+        print("*DEBUG*\t\t fake Wifi running")
         pwd = self.getPwdbySSID(ssid)
+        print("*DEBUG*\t\t pwd:"+pwd)
         self.runFakeWifi(ssid,pwd)
 # ==========================================================
 # 单例模式
