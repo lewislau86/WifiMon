@@ -22,10 +22,10 @@ from PraseArg import singleton as PraseArg
 
 class Verbose(object):
     __silent = False        # silent mode cache output
-    __ApInfo = [[]] * 3
-    __Client = [[]] * 3
-    __silent_ApInfo = [[]] * 4 # manufacture, mac, crypto, ssid
-    __silent_Client = [[]] * 3 # manufacture, mac, ssid
+    __ApInfo = []
+    __Client = []
+    __silent_ApInfo = [] # manufacture, mac, crypto, ssid
+    __silent_Client = [] # manufacture, mac, ssid
     __csvClientName = ""
     __csvAPName = ""
     __args = PraseArg.get_parse()
@@ -78,6 +78,12 @@ class Verbose(object):
         # 写日志不受屏幕输出的影响
         output = '[AP:' + manufacture + '/' + mac + '] ['+crypto+'] ['+'SSID:'+ ssid + ']'
         self.vLogAPWrite(manufacture,mac,crypto,ssid)
+        tmpAP = dict()
+        tmpAP['mac'] = mac
+        tmpAP['crypto'] = crypto
+        tmpAP['ssid'] = ssid
+
+        self.__ApInfo.append(tmpAP)
 
         if self.__silent == False:
             # normal

@@ -8,6 +8,8 @@ Desc  :
 """
 
 from Utils import singleton as Utils
+from Verbose import singleton as Verbose
+
 #from PraseArg import singleton as PraseArg
 
 conf = "interface=wlan0\n" \
@@ -53,12 +55,22 @@ class FakeAP(object):
         f.write(confstr)
         f.close()
 
+    def getPwdbySSID(self,ssid):
+        for apInfo in Verbose.__ApInfo:
+            if apInfo['ssid'] == ssid:
+                mac = apInfo['mac']
+        # 查询密码
+        return ssid+"123"
+
     def runFakeWifi(self,ssid,pwd):
         self.setHostapdConf(ssid,pwd)
         self.runIptableRuleInit()
         self.runUdhcpd()
         self.runHostapd()
 
+    def fakeWifi(self,ssid):
+        pwd = self.getPwdbySSID(ssid)
+        self.runFakeWifi(ssid,pwd)
 # ==========================================================
 # 单例模式
 singleton = FakeAP()

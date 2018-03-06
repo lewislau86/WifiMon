@@ -13,6 +13,7 @@ import threading
 import time
 import signal
 import os
+from FakeAP import singleton as FakeAP
 
 class Status(object):
     verboseMode = 1
@@ -111,6 +112,11 @@ class Command(threading.Thread):
         UiLIb.CPrint.PURPLE("\n\t\tSave\r\n")
 
     def cmd_handle_attack(self):
+        try:
+            ssid = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Input attacked SSID :>>>: "))
+            FakeAP.fakeWifi(ssid)
+        except IOError:
+            pass
         pass
 
     def cmd_handle_export(self):
