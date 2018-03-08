@@ -67,17 +67,34 @@ class FakeAP(object):
         # 查询密码
         return ssid+"123"
 
-    def runFakeWifi(self,ssid,pwd):
+    def getMacbySSID(self,ssid):
+        __apInfo = Verbose.get_apInfo()
+        print(__apInfo)
+        for apInfo in __apInfo:
+            if apInfo['ssid'] == ssid:
+                mac = apInfo['mac']
+        return mac
+
+    def setMacAddr(self,mac):
+        # /sbin/ifconfig
+        Utils.runCmdShell("/sbin/ifconfig wlan0 down")
+        Utils.runCmdShell("/sbin/ifconfig wlan0 hw ether " + mac)
+        Utils.runCmdShell("/sbin/ifconfig wlan0 up")
+
+    def runFakeWifi(self,ssid,pwd,mac):
+        self.setMacAddr(mac)
         self.setHostapdConf(ssid,pwd)
         self.runIptableRuleInit()
         self.runUdhcpd()
         self.runHostapd()
 
+
     def fakeWifi(self,ssid):
         print("*DEBUG*\t\t fake Wifi running")
         pwd = self.getPwdbySSID(ssid)
+        mac = self.getMacbySSID(ssid)
         print("*DEBUG*\t\t pwd:"+pwd)
-        self.runFakeWifi(ssid,pwd)
+        self.runFakeWifi(ssid,pwd,mac)
 
 
 # ==========================================================
