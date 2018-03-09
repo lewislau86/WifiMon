@@ -10,7 +10,7 @@ Desc  :
 # Define
 import subprocess
 import psutil
-
+import os
 #==========================================================
 
 class Utils(object):
@@ -86,6 +86,9 @@ class Utils(object):
                 return ret, None
         except OSError, e:
             return e.errno, None
+
+    def runSystem(self,cmd):
+        os.system(cmd)
 
     def runCmdShell(self , cmd):
         try:

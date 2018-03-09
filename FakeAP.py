@@ -33,17 +33,21 @@ class FakeAP(object):
         iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
         iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
         '''
-        Utils.runCmdShell("/sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
-        Utils.runCmdShell("/sbin/iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
-        Utils.runCmdShell("/sbin/iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT")
+        #Utils.runCmdShell("/sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
+        #Utils.runCmdShell("/sbin/iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
+        #Utils.runCmdShell("/sbin/iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT")
+        Utils.runSystem("/sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE")
+        Utils.runSystem("/sbin/iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT")
+        Utils.runSystem("/sbin/iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT")
 
     def runHostapd(self):
         '''
         hostapd /etc/hostapd/hostapd.conf
         '''
         print("runHostapd")
-        ret,err = Utils.runCmdShell("hostapd /etc/hostapd/hostapd.conf")
-        print(ret,err)
+        #ret,err = Utils.runCmdShell("hostapd /etc/hostapd/hostapd.conf")
+        Utils.runSystem("hostapd /etc/hostapd/hostapd.conf")
+
 
     def runUdhcpd(self):
         '''
@@ -77,13 +81,19 @@ class FakeAP(object):
 
     def setMacAddr(self,mac):
         # /sbin/ifconfig
-        Utils.runCmdShell("/sbin/ifconfig wlan0 down")
-        Utils.runCmdShell("/sbin/ifconfig wlan0 hw ether " + mac)
-        Utils.runCmdShell("/sbin/ifconfig wlan0 up")
+        #Utils.runCmdShell("/sbin/ifconfig wlan0 down")
+        #Utils.runCmdShell("/sbin/ifconfig wlan0 hw ether " + mac)
+        #Utils.runCmdShell("/sbin/ifconfig wlan0 up")
+        Utils.runSystem("/sbin/ifconfig wlan0 down")
+        Utils.runSystem("/sbin/ifconfig wlan0 hw ether " + mac)
+        Utils.runSystem("/sbin/ifconfig wlan0 up")
+
 
     def resetWlan0(self):
-        Utils.runCmdShell("/sbin/ifconfig wlan0 down")
-        Utils.runCmdShell("/sbin/ifconfig wlan0 up")
+        #Utils.runCmdShell("/sbin/ifconfig wlan0 down")
+        #Utils.runCmdShell("/sbin/ifconfig wlan0 up")
+        Utils.runSystem("/sbin/ifconfig wlan0 down")
+        Utils.runSystem("/sbin/ifconfig wlan0 up")
 
     def runFakeWifi(self,ssid,pwd,mac):
         self.setMacAddr(mac)
