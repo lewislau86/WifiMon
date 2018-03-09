@@ -53,7 +53,7 @@ class FakeAP(object):
         Utils.runCmdShell("udhcpd -f /etc/udhcpd.conf")
 
     def setHostapdConf(self,ssid,pwd):
-        confstr  = conf.format(ssid,pwd)
+        confstr  = conf.format(ssid+"_fake",pwd)
         f = open('/etc/hostapd/hostapd.conf', 'w')
         f.write(confstr)
         f.close()
