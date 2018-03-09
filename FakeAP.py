@@ -81,12 +81,18 @@ class FakeAP(object):
         Utils.runCmdShell("/sbin/ifconfig wlan0 hw ether " + mac)
         Utils.runCmdShell("/sbin/ifconfig wlan0 up")
 
+    def resetWlan0(self):
+        Utils.runCmdShell("/sbin/ifconfig wlan0 down")
+        Utils.runCmdShell("/sbin/ifconfig wlan0 up")
+
     def runFakeWifi(self,ssid,pwd,mac):
         self.setMacAddr(mac)
         self.setHostapdConf(ssid,pwd)
         self.runIptableRuleInit()
-        self.runUdhcpd()
         self.runHostapd()
+        self.resetWlan0()
+        self.runUdhcpd()
+
 
 
     def fakeWifi(self,ssid):
