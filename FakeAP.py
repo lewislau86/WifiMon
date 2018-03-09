@@ -46,7 +46,7 @@ class FakeAP(object):
         '''
         print("runHostapd")
         #ret,err = Utils.runCmdShell("hostapd /etc/hostapd/hostapd.conf")
-        Utils.runSystem("hostapd /etc/hostapd/hostapd.conf")
+        Utils.runSystem("hostapd /etc/hostapd/hostapd.conf &")
 
 
     def runUdhcpd(self):
@@ -54,7 +54,7 @@ class FakeAP(object):
         udhcpd -f /etc/udhcpd.conf
         '''
         print("runUdhcpd")
-        Utils.runCmdShell("udhcpd -f /etc/udhcpd.conf")
+        Utils.runCmdShell("udhcpd -f /etc/udhcpd.conf &")
 
     def setHostapdConf(self,ssid,pwd):
         confstr  = conf.format(ssid+"_fake",pwd)
@@ -85,7 +85,7 @@ class FakeAP(object):
         #Utils.runCmdShell("/sbin/ifconfig wlan0 hw ether " + mac)
         #Utils.runCmdShell("/sbin/ifconfig wlan0 up")
         Utils.runSystem("/sbin/ifconfig wlan0 down")
-        Utils.runSystem("/sbin/ifconfig wlan0 hw ether " + mac)
+        Utils.runSystem("/sbin/ifconfig wlan0 hw ether " + mac )
         Utils.runSystem("/sbin/ifconfig wlan0 up")
 
 
