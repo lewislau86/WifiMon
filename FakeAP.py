@@ -119,7 +119,7 @@ class FakeAP(object):
         Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].macaddr="+mac)
         if len(encryptMethod) == 0 or len(key) == 0:
              Utils.runSystem("/sbin/uci delete wireless.@wifi-iface["+index+"].encryption")
-             Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key")
+             Utils.runSystem("/sbin/uci delete wireless.@wifi-iface["+index+"].key")
         else:
             Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].encryption="+encryptMethod)
             Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key="+key)
@@ -131,7 +131,7 @@ class FakeAP(object):
         pwd = self.getPwdbySSID(ssid)
         mac = self.getMacbySSID(ssid)
         method = self.getEncryptionMethodbySSID(ssid)
-        print("start fack "+pwd+"mac:"+mac + " method:" +method)
+        print("fackWifiWithParameter key:"+pwd+" mac:"+mac + " method:" +method)
         if method == "OPN":
             self.fackWifiWithParameter(index,ssid,mac,"","")
         else:
