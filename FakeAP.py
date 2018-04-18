@@ -114,8 +114,8 @@ class FakeAP(object):
 
     def convertEncryptionName(name):
         oname = "wep"
-        if name == "WPA2"
-        oname = "psk2"
+        if name == "WPA2":
+            oname = "psk2"
         return oname
 
 
