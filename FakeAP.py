@@ -122,7 +122,7 @@ class FakeAP(object):
     def fackWifiWithParameter(self,index,ssid,mac,encryptMethod,key):
         Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].ssid="+ssid)
         Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].macaddr="+mac)
-        if len(encryptMethod) == 0 || len(key) == 0:
+        if len(encryptMethod) == 0 or len(key) == 0:
              Utils.runSystem("/sbin/uci delete wireless.@wifi-iface["+index+"].encryption")
              Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key")
         else:
