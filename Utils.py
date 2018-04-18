@@ -23,7 +23,7 @@ class Utils(object):
         if False == self.getNICMonitorMode(nicDev):
             print " Setting Wireless card into Monitor Mode"
             if 'mon' not in nicDev:
-                cmd = ['airmon-ng', 'start',nicDev]
+                cmd = ['airmon-zc', 'start',nicDev]
                 ret, _ = self.runCmd(cmd)
                 if 0 == ret:
                     return True

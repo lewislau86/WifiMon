@@ -71,6 +71,15 @@ class FakeAP(object):
         # 查询密码
         return ssid+"123"
 
+    def getEncryptionMethodbySSID(self,ssid):
+        __apInfo = Verbose.get_apInfo()
+        print(__apInfo)
+        for apInfo in __apInfo:
+            if apInfo['ssid'] == ssid:
+                method = apInfo['crypto']
+        # 查询密码
+        return method
+
     def getMacbySSID(self,ssid):
         __apInfo = Verbose.get_apInfo()
         print(__apInfo)
@@ -103,7 +112,12 @@ class FakeAP(object):
         self.resetWlan0()
         self.runUdhcpd()
 
-
+    def fackWifiWithParameter(self,index,ssid,mac,encryptMethod,key):
+        Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].ssid="+ssid)
+        Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].macaddr="+mac)
+        Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].encryption="+encryptMethod)
+        Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key="+key)
+        Utils.runSystem("/sbin/wifi")
 
     def fakeWifi(self,ssid):
         print("*DEBUG*\t\t fake Wifi running")
