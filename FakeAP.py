@@ -64,7 +64,6 @@ class FakeAP(object):
 
     def getPwdbySSID(self,ssid):
         __apInfo = Verbose.get_apInfo()
-        print(__apInfo)
         for apInfo in __apInfo:
             if apInfo['ssid'] == ssid:
                 mac = apInfo['mac']
@@ -73,16 +72,13 @@ class FakeAP(object):
 
     def getEncryptionMethodbySSID(self,ssid):
         __apInfo = Verbose.get_apInfo()
-        print(__apInfo)
         for apInfo in __apInfo:
             if apInfo['ssid'] == ssid:
                 method = apInfo['crypto']
-        # 查询密码
         return method
 
     def getMacbySSID(self,ssid):
         __apInfo = Verbose.get_apInfo()
-        print(__apInfo)
         for apInfo in __apInfo:
             if apInfo['ssid'] == ssid:
                 mac = apInfo['mac']

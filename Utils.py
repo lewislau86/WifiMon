@@ -88,6 +88,7 @@ class Utils(object):
             return e.errno, None
 
     def runSystem(self,cmd):
+        print("start call"+cmd)
         os.system(cmd)
 
     def runCmdShell(self , cmd):
