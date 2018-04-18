@@ -69,7 +69,7 @@ class FakeAP(object):
             if apInfo['ssid'] == ssid:
                 mac = apInfo['mac']
         # 查询密码
-        return ssid+"123"
+        return "12345678"
 
     def getEncryptionMethodbySSID(self,ssid):
         __apInfo = Verbose.get_apInfo()
@@ -112,19 +112,37 @@ class FakeAP(object):
         self.resetWlan0()
         self.runUdhcpd()
 
+    def convertEncryptionName(name):
+        oname = "wep"
+        if name == "WPA2"
+        oname = "psk2"
+        return oname
+
+
     def fackWifiWithParameter(self,index,ssid,mac,encryptMethod,key):
         Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].ssid="+ssid)
         Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].macaddr="+mac)
-        Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].encryption="+encryptMethod)
-        Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key="+key)
+        if len(encryptMethod) == 0 || len(key) == 0:
+             Utils.runSystem("/sbin/uci delete wireless.@wifi-iface["+index+"].encryption")
+             Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key")
+        else:
+            Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].encryption="+encryptMethod)
+            Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].key="+key)
+        Utils.runSystem("/sbin/uci commit")
         Utils.runSystem("/sbin/wifi")
 
-    def fakeWifi(self,ssid):
+    def fakeWifi(self,ssid,index):
         print("*DEBUG*\t\t fake Wifi running")
         pwd = self.getPwdbySSID(ssid)
         mac = self.getMacbySSID(ssid)
+        method = self.getEncryptionMethodbySSID(ssid)
+        if method != "OPN"{
+            self.fackWifiWithParameter(self,index,ssid,mac,"","")
+        }else {
+            name = self.convertEncryptionName(method)
+            self.fackWifiWithParameter(self,index,ssid,mac,name,pwd)
+        }
         print("*DEBUG*\t\t pwd:"+pwd)
-        self.runFakeWifi(ssid,pwd,mac)
 
 
 # ==========================================================

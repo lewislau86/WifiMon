@@ -114,7 +114,8 @@ class Command(threading.Thread):
     def cmd_handle_attack(self):
         try:
             ssid = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Input attacked SSID :>>>: "))
-            FakeAP.fakeWifi(ssid)
+            index = raw_input(UiLIb.fmt(UiLIb.PURPLE, "Input wifi iface index (0 or 1) :>>>: "))
+            FakeAP.fakeWifi(ssid,index)
         except IOError:
             pass
         pass
