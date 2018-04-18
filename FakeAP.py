@@ -108,12 +108,11 @@ class FakeAP(object):
         self.resetWlan0()
         self.runUdhcpd()
 
-    def convertEncryptionName(name):
+    def convertEncryptionName(self,name):
         oname = "wep"
         if name == "WPA2":
             oname = "psk2"
         return oname
-
 
     def fackWifiWithParameter(self,index,ssid,mac,encryptMethod,key):
         Utils.runSystem("/sbin/uci set wireless.@wifi-iface["+index+"].ssid="+ssid)
@@ -132,6 +131,7 @@ class FakeAP(object):
         pwd = self.getPwdbySSID(ssid)
         mac = self.getMacbySSID(ssid)
         method = self.getEncryptionMethodbySSID(ssid)
+        print("start fack "+pwd+"mac:"+mac + " method:" +method)
         if method != "OPN":
             self.fackWifiWithParameter(self,index,ssid,mac,"","")
         else:
