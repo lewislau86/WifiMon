@@ -136,12 +136,11 @@ class FakeAP(object):
         pwd = self.getPwdbySSID(ssid)
         mac = self.getMacbySSID(ssid)
         method = self.getEncryptionMethodbySSID(ssid)
-        if method != "OPN"{
+        if method != "OPN":
             self.fackWifiWithParameter(self,index,ssid,mac,"","")
-        }else {
+        else:
             name = self.convertEncryptionName(method)
             self.fackWifiWithParameter(self,index,ssid,mac,name,pwd)
-        }
         print("*DEBUG*\t\t pwd:"+pwd)
 
 
